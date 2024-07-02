@@ -148,11 +148,12 @@ function openPage(pageName, elmnt, color) {
       .attr("cx", d => xScale(d["AverageCityMPG"]))
       .attr("cy", d => yScale(d["AverageHighwayMPG"]))
       .attr("r", d => 2 + Number(d["EngineCylinders"]));
-    
+
+    marginTop2 = margin.top + 100;
     svg.append("g")
-      .attr("transform", "translate(" + margin.left + "," + margin.top+100 + ")")
+      .attr("transform", "translate(" + margin.left + "," + marginTop2 + ")")
       .call(yAxis); 
-    const xheight = height + margin.top;
+    const xheight = height + marginTop2;
     
     svg.append("g")
      .attr("transform", "translate(" + margin.left + "," + xheight + ")")
