@@ -121,7 +121,9 @@ function openPage(pageName, elmnt, color) {
     // Create SVG element
     // const svg = d3.select("svg");
     // Create SVG element with calculated width and height
-    const svg = d3.select(homeContent).append("svg");
+    const svg = d3.select(homeContent).append("svg")
+	  .attr("width", width)
+          .attr("height", height);
 
     // Define scales
     const xScale = d3.scaleLog([10, 150],[0, width]);
