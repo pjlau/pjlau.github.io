@@ -62,12 +62,12 @@ body, html {
 
 <div id="Home" class="tabcontent">
   <h3>Home</h3>
-  <p>Home is where the heart is..</p>
+  <p></p>
 </div>
 
 <div id="News" class="tabcontent">
   <h3>News</h3>
-  <p>Some news this fine day!</p>
+  <p></p>
 </div>
 
 <div id="Contact" class="tabcontent">
@@ -123,7 +123,7 @@ function openPage(pageName, elmnt, color) {
 
     // Define scales
     const xScale = d3.scaleLog([10, 150],[0, width]);
-    const yScale = d3.scaleLog([10, 150],[height, 0]);
+    const yScale = d3.scaleLog([10, 150],[height+100, 0]);
 
     // Define axes
     const xAxis = d3.axisBottom(xScale)
