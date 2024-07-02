@@ -174,7 +174,7 @@ var scrollVis = function () {
       .attr('class', 'sub-title openvis-title')
       .attr('x', width / 2)
       .attr('y', (height / 3) + (height / 5))
-      .text('Data Visualization');
+      .text('Narrative DV');
 
     g.selectAll('.openvis-title')
       .attr('opacity', 0);
