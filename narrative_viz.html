@@ -119,7 +119,9 @@ function openPage(pageName, elmnt, color) {
     const height = 300 - margin.top - margin.bottom;
 
     // Create SVG element
-    const svg = d3.select("svg");
+    // const svg = d3.select("svg");
+    // Create SVG element with calculated width and height
+    const svg = d3.select(homeContent).append("svg");
 
     // Define scales
     const xScale = d3.scaleLog([10, 150],[0, width]);
@@ -178,8 +180,10 @@ var pie = d3.pie();
 var arc = d3.arc().innerRadius(0).outerRadius(100);
 
     // Define the SVG element
-    var svg = d3.select("svg");
-
+    // var svg = d3.select("svg");
+    // Create SVG element with calculated width and height
+    const svg = d3.select(newsContent).append("svg");
+	  
     // Define the pie chart layout
     var pie = d3.pie();
 
