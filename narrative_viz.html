@@ -171,7 +171,12 @@ function openPage(pageName, elmnt, color) {
   }
   else if (pageName == "News"){
 
-	  
+  // Get the "Home" tab content element
+  const newsContent = document.getElementById("News");
+
+  // Clear any existing content within the "Home" tab
+  newsContent.innerHTML = ""; // Removes all child elements
+
 var data = [4,8,15,16,23,42];
 var color = ['pink','lightyellow','lightgreen','lightcyan','lightblue','violet'];
 var pie = d3.pie();
