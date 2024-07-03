@@ -184,13 +184,13 @@ var scrollVis = function () {
       .attr('class', 'title count-title highlight')
       .attr('x', width / 2)
       .attr('y', height / 3)
-      .text('123');
+      .text('48842 entries');
 
     g.append('text')
       .attr('class', 'sub-title count-title')
       .attr('x', width / 2)
       .attr('y', (height / 3) + (height / 5))
-      .text('Fly Away');
+      .text('15 attributes');
 
     g.selectAll('.count-title')
       .attr('opacity', 0);
