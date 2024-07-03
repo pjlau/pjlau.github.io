@@ -184,7 +184,7 @@ var scrollVis = function () {
       .attr('class', 'title count-title highlight')
       .attr('x', width / 2)
       .attr('y', height / 3)
-      .text('48842 entries');
+      .text('48842 rows');
 
     g.append('text')
       .attr('class', 'sub-title count-title')
