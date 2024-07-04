@@ -153,12 +153,13 @@ var scrollVis = function () {
       var lowHistMax = d3.max(lowHistData);
       var highHistMax = d3.max(highHistData);
       
-      var histData = getHistogram(fillerWords);
+      //var histData = getHistogram(fillerWords);
       // set histogram's domain
       //var histMax = d3.max(histData, function (d) { return d.length; });
       var histMax = d3.max([lowHistMax,highHistMax]);
       yHistScale.domain([0, histMax]);
 
+      var histData = highHistData;
       setupVis(wordData, fillerCounts, histData);
 
       setupSections();
