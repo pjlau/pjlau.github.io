@@ -1,4 +1,5 @@
 
+
 /**
  * scrollVis - encapsulates
  * all the code for the visualization
@@ -757,7 +758,7 @@ var scrollVis = function () {
     //return d3.histogram()
     //  .thresholds(xHistScale.ticks(10))
     //  .value(function (d) { return d.min; })(thirtyMins);
-    return d3.histogram();
+    return d3.histogram().thresholds(xHistScale.ticks(10)).value(function (d) { return d; })(data);
   }
 
   /**
