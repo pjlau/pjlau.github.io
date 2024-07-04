@@ -1,232 +1,64 @@
-<!DOCTYPE HTML>
-<!--
-	Future Imperfect by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
 <html>
 <script src='https://d3js.org/d3.v5.min.js'></script>
-<style> 
-	circle {fill: lightblue; stroke: black;} 
-
-/* Set height of body and the document to 100% to enable "full page tabs" */
-body, html {
-  height: 100%;
-  margin: 0;
-  font-family: Arial;
-}
-
-svg {
-  visibility: hidden;
-}
-	
-/* Style tab links */
-.tablink {
-  background-color: #555;
-  color: white;
-  float: left;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  padding: 14px 16px;
-  font-size: 17px;
-  width: 25%;
-}
-
-.tablink:hover {
-  background-color: #777;
-}
-
-/* Style the tab content (and add height:100% for full page content) */
-
-/*
-.tabcontent {
-  color: white;
-  display: none;
-  padding: 100px 20px;
-  height: 100%;
-}
-*/
-	
-#Home {background-color: red;}
-#News {background-color: green;}
-#Contact {background-color: blue;}
-#About {background-color: orange;}
-
-
-</style>
+<style> circle {fill: lightblue; stroke: black;} </style>
 <body onload='init()'>
-<svg width=600 height=600>
+<svg width=300 height=300>
 </svg>
-	
-<button class="tablink" onclick="openPage('Home', this, 'red')">Home</button>
-<button class="tablink" onclick="openPage('News', this, 'green')" id="defaultOpen">News</button>
-<button class="tablink" onclick="openPage('Contact', this, 'blue')">Contact</button>
-<button class="tablink" onclick="openPage('About', this, 'orange')">About</button>
-
-<div id="Home" class="tabcontent">
-  <h3></h3>
-  <p></p>
-</div>
-
-<div id="News" class="tabcontent">
-  <h3></h3>
-  <p></p>
-</div>
-
-<div id="Contact" class="tabcontent">
-  <h3>Contact</h3>
-  <p>Get in touch, or swing by for a cup of coffee.</p>
-</div>
-
-<div id="About" class="tabcontent">
-  <h3>About</h3>
-  <p>Who we are and what we do.</p>
-</div>
-	
 <script>
+	// set the dimensions and margins of the graph
+var margin = {top: 10, right: 30, bottom: 30, left: 40},
+    width = 460 - margin.left - margin.right,
+    height = 400 - margin.top - margin.bottom;
 
+// append the svg object to the body of the page
+var svg = d3.select("#my_dataviz")
+  .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform",
+          "translate(" + margin.left + "," + margin.top + ")");
 
-function openPage(pageName, elmnt, color) {
-  // Hide all elements with class="tabcontent" by default */
-  var i, tabcontent, tablinks;
-  tabcontent = document.getElementsByClassName("tabcontent");
-  for (i = 0; i < tabcontent.length; i++) {
-    tabcontent[i].style.display = "none";
-  }
+// get the data
+d3.csv("https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/1_OneNum.csv", function(data) {
 
-  // Remove the background color of all tablinks/buttons
-  tablinks = document.getElementsByClassName("tablink");
-  for (i = 0; i < tablinks.length; i++) {
-    tablinks[i].style.backgroundColor = "";
-  }
+  // X axis: scale and draw:
+  var x = d3.scaleLinear()
+      .domain([0, 1000])     // can use this instead of 1000 to have the max of data: d3.max(data, function(d) { return +d.price })
+      .range([0, width]);
+  svg.append("g")
+      .attr("transform", "translate(0," + height + ")")
+      .call(d3.axisBottom(x));
 
-  // Show the specific tab content
-  document.getElementById(pageName).style.display = "block";
+  // set the parameters for the histogram
+  var histogram = d3.histogram()
+      .value(function(d) { return d.price; })   // I need to give the vector of value
+      .domain(x.domain())  // then the domain of the graphic
+      .thresholds(x.ticks(70)); // then the numbers of bins
 
-  // Add the specific color to the button used to open the tab content
-  elmnt.style.backgroundColor = color;
+  // And apply this function to data to get the bins
+  var bins = histogram(data);
 
-  if (pageName == "Home"){
-	  // Load CSV data
-  d3.csv("https://flunky.github.io/cars2017.csv").then(function(data) {
+  // Y axis: scale and draw:
+  var y = d3.scaleLinear()
+      .range([height, 0]);
+      y.domain([0, d3.max(bins, function(d) { return d.length; })]);   // d3.hist has to be called before the Y axis obviously
+  svg.append("g")
+      .call(d3.axisLeft(y));
 
-    // Get the "Home" tab content element
-    const homeContent = document.getElementById("Home");
-
-    // Clear any existing content within the "Home" tab
-    homeContent.innerHTML = ""; // Removes all child elements
-    
-    // Define margins and chart dimensions
-    const margin = { top: 50, right: 50, bottom: 50, left: 50 };
-    const width = 300 - margin.left - margin.right;
-    const height = 300 - margin.top - margin.bottom;
-
-    // Create SVG element
-    // const svg = d3.select("svg");
-    // Create SVG element with calculated width and height
-    const svg = d3.select(homeContent).append("svg")
-	  .attr("width", width)
-          .attr("height", height);
-
-    // Define scales
-    const xScale = d3.scaleLog([10, 150],[0, width]);
-    const yScale = d3.scaleLog([10, 150],[height, 0]);
-
-    // Define axes
-    const xAxis = d3.axisBottom(xScale)
-      .tickValues([10, 20, 50, 100])
-      .tickFormat(d3.format("~s"));
-
-    const yAxis = d3.axisLeft(yScale)
-      .tickValues([10, 20, 50, 100])
-      .tickFormat(d3.format("~s"));
-
-    
-    
-    const g = svg.append("g")
-                    .attr("transform", "translate(50,150)"); 
-    
-
-    // Define circles based on data
-    const circles = g.selectAll("circle")
-      .data(data)
+  // append the bar rectangles to the svg element
+  svg.selectAll("rect")
+      .data(bins)
       .enter()
-      .append("circle")
-      .attr("cx", d => xScale(d["AverageCityMPG"]))
-      .attr("cy", d => yScale(d["AverageHighwayMPG"]))
-      .attr("r", d => 2 + Number(d["EngineCylinders"]));
+      .append("rect")
+        .attr("x", 1)
+        .attr("transform", function(d) { return "translate(" + x(d.x0) + "," + y(d.length) + ")"; })
+        .attr("width", function(d) { return x(d.x1) - x(d.x0) -1 ; })
+        .attr("height", function(d) { return height - y(d.length); })
+        .style("fill", "#69b3a2")
 
-    marginTop2 = margin.top + 100;
-    svg.append("g")
-      .attr("transform", "translate(" + margin.left + "," + marginTop2 + ")")
-      .call(yAxis); 
-    const xheight = height + marginTop2;
-    
-    svg.append("g")
-     .attr("transform", "translate(" + margin.left + "," + xheight + ")")
-      .call(xAxis);
- 
-   
-    
-    
-  });
-  }
-  else if (pageName == "News"){
+});
 
-  // Get the "Home" tab content element
-  const newsContent = document.getElementById("News");
-
-  // Clear any existing content within the "Home" tab
-  newsContent.innerHTML = ""; // Removes all child elements
-
-var data = [4,8,15,16,23,42];
-var color = ['pink','lightyellow','lightgreen','lightcyan','lightblue','violet'];
-var pie = d3.pie();
-var arc = d3.arc().innerRadius(0).outerRadius(100);
-
-    // Define the SVG element
-    // var svg = d3.select("svg");
-    // Create SVG element with calculated width and height
-    const svg = d3.select(newsContent).append("svg");
-	  
-    // Define the pie chart layout
-    var pie = d3.pie();
-
-    // Define the arc generator (adjusted for inner radius)
-    var arc = d3.arc()
-      .innerRadius(0)
-      .outerRadius(100);
-
-    // Create pie chart data based on input data
-    var pieData = pie(data);
-
-    // Create a group element to hold pie chart slices
-    var pieGroup = svg.append("g")
-      .attr("transform", "translate(450,250)");  // Center the pie chart
-
-    // Bind data to pie chart slices and create paths
-    pieGroup.selectAll("path")
-      .data(pieData)
-      .enter()
-      .append("path")
-        .attr("d", arc)  // Use arc generator to define path
-        .attr("fill", function(d, i) { return color[i]; })  // Set color based on color array
-
-
-
-	  
-  }
-  else {
-    // Show the pre-specified content for other tabs
-    document.getElementById(pageName).style.display = "block";
-  }
-
-}
-
-// Get the element with id="defaultOpen" and click on it
-// document.getElementById("defaultOpen").click();
-	
 </script>
 </body>
 </html>
