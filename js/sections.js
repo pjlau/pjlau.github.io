@@ -131,8 +131,8 @@ var scrollVis = function () {
 
       // perform some preprocessing on raw data
       var wordData = getWords(rawData);
-      var lowIncomeData = getBinary(rawData,0);
-      var highIncomeData = getBinary(rawData,1);
+      var lowIncomeData = getBinary(rawData,'0');
+      var highIncomeData = getBinary(rawData,'1');
 
       var lowIncomeAgeData = getAge(lowIncomeData);
       var highIncomeAgeData = getAge(highIncomeData);
@@ -680,7 +680,7 @@ var scrollVis = function () {
    * @param rawData - data read in from file
    */
   function getBinary(rawData, i) {
-      var rawBinary = rawData.filter(function (d) { return d.income50k == i; });
+      var rawBinary = rawData.filter(function (d) { return d.income50k === i; });
   }
 
   /**
