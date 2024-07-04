@@ -7,7 +7,7 @@
 <script src='https://d3js.org/d3.v5.min.js'></script>
 <!-- Create a div where the graph will take place -->
 <div id="my_dataviz"></div>
-<svg width=300 height=300>
+
 </svg>
 <script>
   var data = [4,8,15,16,23,42];
@@ -18,7 +18,12 @@
   const dmax = d3.max(data);
 
   // Create SVG element
-  const svg = d3.select("#my_dataviz").append("svg");
+  //const svg = d3.select("#my_dataviz").append("svg");
+  // append the svg object to the body of the page
+  const svg = d3.select("#my_dataviz")
+	  .append("svg")
+	    .attr("width", width + margin.left + margin.right)
+	    .attr("height", height + margin.top + margin.bottom);
   
   const g = svg.append("g")
 .attr("transform", "translate(" + margin.left + "," + margin.top + ")");  
