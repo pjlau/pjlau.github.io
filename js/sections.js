@@ -340,7 +340,7 @@ var scrollVis = function () {
     for (var i = 0; i < 9; i++) {
       updateFunctions[i] = function () {};
     }
-    updateFunctions[7] = updateCough;
+    //updateFunctions[7] = updateCough;
   };
 
   /**
