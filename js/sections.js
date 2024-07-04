@@ -711,9 +711,11 @@ var scrollVis = function () {
   function getWords(rawData) {
     return rawData.map(function (d, i) {
       // is this word a filler word?
-      d.filler = (d.filler === '1') ? true : false;
+      //d.filler = (d.filler === '1') ? true : false;
+      d.income50k = (d.income50k === '1') ? true : false;
       // time in seconds word was spoken
-      d.time = +d.time;
+      //d.time = +d.time;
+      d.age = +d.age;
       // time in minutes word was spoken
       d.min = Math.floor(d.time / 60);
 
