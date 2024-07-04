@@ -26,7 +26,7 @@ var svg = d3.select("#my_dataviz")
 d3.csv("data/adult_bin.csv", function(data) {
 
   //var survival_count =  my_data.filter(function(m){if(m[data_class]==d && m.survived == 1){return m}}).length;
-  var data1 = data.filter(function(d){if(d['income50k']===1){return d}});
+  var data1 = data.filter(function(d){if(d['income50k']==1){return d}});
   
 
   // X axis: scale and draw:
