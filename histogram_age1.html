@@ -26,7 +26,7 @@ var svg = d3.select("#my_dataviz")
 d3.csv("data/adult_bin.csv", function(data) {
 
   //var survival_count =  my_data.filter(function(m){if(m[data_class]==d && m.survived == 1){return m}}).length;
-  //var data1 = data.filter(function(m){if(m[income50k]===1){return m}});
+  var data1 = data.filter(function(d){if(d.income50k===1){return d}});
   //var data0 = data.filter(function(m){if(m[income50k]===0){return m}});
 
   // X axis: scale and draw:
@@ -39,17 +39,17 @@ d3.csv("data/adult_bin.csv", function(data) {
 
   // set the parameters for the histogram
   var histogram = d3.histogram()
-      .value(function(d) { return d.age; })   // I need to give the vector of value
+      .value(function(d) {if(d.income50k===1){return d.age;} })   // I need to give the vector of value
       .domain(x.domain())  // then the domain of the graphic
       .thresholds(x.ticks(10)); // then the numbers of bins
 
   // And apply this function to data to get the bins
-  var bins = histogram(data);
+  var bins = histogram(data1);
 
   // Y axis: scale and draw:
   var y = d3.scaleLinear()
       .range([height, 0]);
-      y.domain([0, d3.max(bins, function(d) { return d.length; })]);   // d3.hist has to be called before the Y axis obviously
+      y.domain([0, d3.max(bins, function(d) { if(d.income50k===1){return d.length;} })]);   // d3.hist has to be called before the Y axis obviously
   svg.append("g")
       .call(d3.axisLeft(y));
 
@@ -59,9 +59,9 @@ d3.csv("data/adult_bin.csv", function(data) {
       .enter()
       .append("rect")
         .attr("x", 1)
-        .attr("transform", function(d) { return "translate(" + x(d.x0) + "," + y(d.length) + ")"; })
-        .attr("width", function(d) { return x(d.x1) - x(d.x0) -1 ; })
-        .attr("height", function(d) { return height - y(d.length); })
+        .attr("transform", function(d) { if(d.income50k===1){return "translate(" + x(d.x0) + "," + y(d.length) + ")";} })
+        .attr("width", function(d) { if(d.income50k===1){return x(d.x1) - x(d.x0) -1 ;} })
+        .attr("height", function(d) { if(d.income50k===1){return height - y(d.length);} })
         .style("fill", "#69b3a2")
    
 });
