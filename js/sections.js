@@ -129,7 +129,12 @@ var scrollVis = function () {
         .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
       // perform some preprocessing on raw data
-      var wordData = getWords(rawData);
+      //var wordData = getWords(rawData);
+      var lowIncomeData = getBinary(rawData,0);
+      var highIncomeData = getBinary(rawData,1);
+
+      var lowIncomeAgeData = getAge(lowIncomeData);
+      var highIncomeAgeData = getAge(highIncomeData);
       // filter to just include filler words
       var fillerWords = getFillerWords(wordData);
 
@@ -142,9 +147,16 @@ var scrollVis = function () {
 
       // get aggregated histogram data
 
+      var lowHistData = getHistogram(lowIncomeAgeData);
+      var highHistData = getHistogram(highIncomeAgeData);
+
+      var lowHistMax = d3.max(lowHistData);
+      var highHistMax = d3.max(highHistData);
+      
       var histData = getHistogram(fillerWords);
       // set histogram's domain
-      var histMax = d3.max(histData, function (d) { return d.length; });
+      //var histMax = d3.max(histData, function (d) { return d.length; });
+      var histMax = d3.max([lowHistMax,highHistMax]);
       yHistScale.domain([0, histMax]);
 
       setupVis(wordData, fillerCounts, histData);
@@ -667,6 +679,21 @@ var scrollVis = function () {
    */
   function getBinary(rawData, i) {
       var rawBinary = rawData.filter(function (d) { return d.income50k == i; });
+  }
+
+  /**
+   * getAge - maps raw data to
+   * array of data objects. There is
+   * one data object for each word in the speach
+   * data.
+   *
+   * This function converts some attributes into
+   * numbers and adds attributes used in the visualization
+   *
+   * @param data - data filtered by income
+   */
+  function getAge(data) {
+    return data.filter(function (d) {return d.age; });
   }
   /**
    * getWords - maps raw data to
