@@ -315,13 +315,21 @@ var scrollVis = function () {
     // time the active section changes
     activateFunctions[0] = showTitle;
     activateFunctions[1] = showFillerTitle;
-    activateFunctions[2] = showGrid;
-    activateFunctions[3] = highlightGrid;
-    activateFunctions[4] = showBar;
-    activateFunctions[5] = showHistPart;
-    activateFunctions[6] = showHistAll;
-    activateFunctions[7] = showCough;
-    activateFunctions[8] = showHistAll;
+    activateFunctions[2] = showTitle;
+    activateFunctions[3] = showFillerTitle;
+    activateFunctions[4] = showFillerTitle;
+    activateFunctions[5] = showFillerTitle;
+    activateFunctions[6] = showFillerTitle;
+    activateFunctions[7] = showFillerTitle;
+    activateFunctions[8] = showFillerTitle;
+    
+    //activateFunctions[2] = showGrid;
+    //activateFunctions[3] = highlightGrid;
+    //activateFunctions[4] = showBar;
+    //activateFunctions[5] = showHistPart;
+    //activateFunctions[6] = showHistAll;
+    //activateFunctions[7] = showCough;
+    //activateFunctions[8] = showHistAll;
 
     // updateFunctions are called while
     // in a particular section to update
