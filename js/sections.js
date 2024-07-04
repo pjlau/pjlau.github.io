@@ -198,18 +198,18 @@ var scrollVis = function () {
     // square grid
     // @v4 Using .merge here to ensure
     // new and old data have same attrs applied
-    var squares = g.selectAll('.square').data(wordData, function (d) { return d.word; });
-    var squaresE = squares.enter()
-      .append('rect')
-      .classed('square', true);
-    squares = squares.merge(squaresE)
-      .attr('width', squareSize)
-      .attr('height', squareSize)
-      .attr('fill', '#fff')
-      .classed('fill-square', function (d) { return d.filler; })
-      .attr('x', function (d) { return d.x;})
-      .attr('y', function (d) { return d.y;})
-      .attr('opacity', 0);
+    //var squares = g.selectAll('.square').data(wordData, function (d) { return d.word; });
+    //var squaresE = squares.enter()
+    //  .append('rect')
+    //  .classed('square', true);
+    //squares = squares.merge(squaresE)
+    //  .attr('width', squareSize)
+    //  .attr('height', squareSize)
+    //  .attr('fill', '#fff')
+    //  .classed('fill-square', function (d) { return d.filler; })
+    //  .attr('x', function (d) { return d.x;})
+    //  .attr('y', function (d) { return d.y;})
+    //  .attr('opacity', 0);
 
     // barchart
     // @v4 Using .merge here to ensure
@@ -261,14 +261,14 @@ var scrollVis = function () {
 
     // arrowhead from
     // http://logogin.blogspot.com/2013/02/d3js-arrowhead-markers.html
-    svg.append('defs').append('marker')
-      .attr('id', 'arrowhead')
-      .attr('refY', 2)
-      .attr('markerWidth', 6)
-      .attr('markerHeight', 4)
-      .attr('orient', 'auto')
-      .append('path')
-      .attr('d', 'M 0,0 V 4 L6,2 Z');
+    //svg.append('defs').append('marker')
+    //  .attr('id', 'arrowhead')
+    //  .attr('refY', 2)
+    //  .attr('markerWidth', 6)
+    //  .attr('markerHeight', 4)
+    //  .attr('orient', 'auto')
+    //  .append('path')
+    //  .attr('d', 'M 0,0 V 4 L6,2 Z');
 
     g.append('path')
       .attr('class', 'cough cough-arrow')
@@ -793,4 +793,5 @@ function display(data) {
 }
 
 // load data and display
-d3.tsv('data/words.tsv', display);
+//d3.tsv('data/words.tsv', display);
+d3.csv('data/adult_bin.csv', display);
