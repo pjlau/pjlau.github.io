@@ -28,6 +28,8 @@ d3.csv("data/adult_bin.csv", function(data) {
   //var survival_count =  my_data.filter(function(m){if(m[data_class]==d && m.survived == 1){return m}}).length;
   var data1 = data.filter(function(m){if(m[income50k]==1){return m}}).length;
   var data0 = data.filter(function(m){if(m[income50k]==0){return m}}).length;
+
+  function plot_data(data){
   // X axis: scale and draw:
   var x = d3.scaleLinear()
       .domain([0, 100])     // can use this instead of 1000 to have the max of data: d3.max(data, function(d) { return +d.price })
@@ -61,8 +63,9 @@ d3.csv("data/adult_bin.csv", function(data) {
         .attr("transform", function(d) { return "translate(" + x(d.x0) + "," + y(d.length) + ")"; })
         .attr("width", function(d) { return x(d.x1) - x(d.x0) -1 ; })
         .attr("height", function(d) { return height - y(d.length); })
-        .style("fill", "#69b3a2")
-
+        .style("fill", "#69b3a2");
+   )
+   plot_data(data1);
 });
 
 </script>
