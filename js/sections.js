@@ -51,11 +51,15 @@ var scrollVis = function () {
   var barColors = { 0: '#008080', 1: '#399785', 2: '#5AAF8C' };
 
   // The histogram display shows the
-  // first 30 minutes of data
+  // age spans 90 years of data
   // so the range goes from 0 to 30
   // @v4 using new scale name
+  //var xHistScale = d3.scaleLinear()
+  //  .domain([0, 30])
+  //  .range([0, width - 20]);
+
   var xHistScale = d3.scaleLinear()
-    .domain([0, 30])
+    .domain([0, 90])
     .range([0, width - 20]);
 
   // @v4 using new scale name
@@ -80,9 +84,13 @@ var scrollVis = function () {
     .scale(xBarScale);
 
   // @v4 using new axis name
+  //var xAxisHist = d3.axisBottom()
+  //  .scale(xHistScale)
+  //  .tickFormat(function (d) { return d + ' min'; });
+
   var xAxisHist = d3.axisBottom()
     .scale(xHistScale)
-    .tickFormat(function (d) { return d + ' min'; });
+    .tickFormat(function (d) { return d; });
 
   // When scrolling to a new section
   // the activation function for that
