@@ -129,7 +129,7 @@ var scrollVis = function () {
         .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
       // perform some preprocessing on raw data
-      //var wordData = getWords(rawData);
+      var wordData = getWords(rawData);
       var lowIncomeData = getBinary(rawData,0);
       var highIncomeData = getBinary(rawData,1);
 
