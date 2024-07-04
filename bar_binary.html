@@ -17,7 +17,11 @@
   const margin = { top: 50, right: 50, bottom: 50, left: 50 };
   const width = 300 - margin.left - margin.right;
   const height = 300 - margin.top - margin.bottom;
-  const dmax = d3.max(data.age);
+  var age = data.age;
+  // Convert age from string to int
+  var age_int = age.map(function(d) { return +d; }); 
+	  
+  const dmax = d3.max(age_int);
 
   // Create SVG element
   //const svg = d3.select("#my_dataviz").append("svg");
@@ -30,9 +34,10 @@
   const g = svg.append("g")
 .attr("transform", "translate(" + margin.left + "," + margin.top + ")");  
 
+  var xdom = Array(90).fill(0).map((e,i)=>e+(i*1));
   // Define x-axis scale
   const xScale = d3.scaleBand()
-    .domain([0, 1, 2, 3, 4, 5])
+    .domain(xdom)
     .range([0, width]);
   const yScale = d3.scaleLinear()
     .domain([0, dmax])
@@ -43,7 +48,7 @@
 
   // Create bars based on data
   g.selectAll("rect")
-    .data(data.age)
+    .data(age_int)
     .enter()
     .append("rect")
     .attr("x", (d, i) => xScale(i))  
