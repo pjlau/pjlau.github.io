@@ -1,0 +1,78 @@
+<html>
+<body onload='init()'>
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style> rect {fill: lightblue; stroke: black; }</style>
+<!-- Load d3.js -->
+<script src="https://d3js.org/d3.v4.js"></script>
+<!-- Create a div where the graph will take place -->
+<div id="my_dataviz"></div>
+<script>
+	// set the dimensions and margins of the graph
+var margin = {top: 10, right: 30, bottom: 30, left: 40},
+    width = 460 - margin.left - margin.right,
+    height = 400 - margin.top - margin.bottom;
+
+// append the svg object to the body of the page
+var svg = d3.select("#my_dataviz")
+  .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom);
+  
+
+// get the data
+d3.csv("data/adult_bin.csv", function(data) {
+
+  //var survival_count =  my_data.filter(function(m){if(m[data_class]==d && m.survived == 1){return m}}).length;
+  var data0_len = data.filter(function(d){if(d['income50k']==0){return d}}).length;
+  var data1_len = data.filter(function(d){if(d['income50k']==1){return d}}).length;
+  var data_len = data.length;
+
+  var bar_viz = [data0_len/data_len, data1_len/data_len];
+	// Define margins and chart dimensions
+  
+  const dmax = d3.max(bar_viz);
+
+  // Create SVG element
+  //const svg = d3.select("#my_dataviz").append("svg");
+  // append the svg object to the body of the page
+  
+  
+  const g = svg.append("g")
+.attr("transform", "translate(" + margin.left + "," + margin.top + ")");  
+
+  // Define x-axis scale
+  const xScale = d3.scaleBand()
+    .domain([0, 1])
+    .range([0, width]);
+  const yScale = d3.scaleLinear()
+    .domain([0, dmax])
+    .range([height,0]);
+
+  const xAxis = d3.axisBottom(xScale);
+  const yAxis = d3.axisLeft(yScale);
+
+  // Create bars based on data
+  g.selectAll("rect")
+    .data(bar_viz)
+    .enter()
+    .append("rect")
+    .attr("x", (d, i) => xScale(i))  
+    .attr("y", d => height - d*height/dmax)  // Position bars from top (y-axis)
+    .attr("width", xScale.bandwidth())  // Set width using scale's bandwidth
+    .attr("height", d => d*height/dmax);  // Set height based on data value
+
+   svg.append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+      .call(yAxis); 
+    const xheight = height + margin.top;
+    
+   svg.append("g")
+     .attr("transform", "translate(" + margin.left + "," + xheight + ")")
+      .call(xAxis);
+   
+});
+
+</script>
+</body>
+</html>
