@@ -39,7 +39,7 @@ d3.csv("data/adult_bin.csv", function(data) {
 
   // set the parameters for the histogram
   var histogram = d3.histogram()
-      .value(function(d) {if(d['income50k']===1){ return d.age;} })   // I need to give the vector of value
+      .value(function(d) {if(d['income50k']==1){ return d.age;} })   // I need to give the vector of value
       .domain(x.domain())  // then the domain of the graphic
       .thresholds(x.ticks(10)); // then the numbers of bins
 
