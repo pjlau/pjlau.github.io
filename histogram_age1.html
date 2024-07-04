@@ -26,8 +26,8 @@ var svg = d3.select("#my_dataviz")
 d3.csv("data/adult_bin.csv", function(data) {
 
   //var survival_count =  my_data.filter(function(m){if(m[data_class]==d && m.survived == 1){return m}}).length;
-  var data1 = data.filter(function(d){if(d.income50k===1){return d}});
-  //var data0 = data.filter(function(m){if(m[income50k]===0){return m}});
+  var data1 = data.filter(function(d){if(d['income50k']===1){return d}});
+  
 
   // X axis: scale and draw:
   var x = d3.scaleLinear()
@@ -39,7 +39,7 @@ d3.csv("data/adult_bin.csv", function(data) {
 
   // set the parameters for the histogram
   var histogram = d3.histogram()
-      .value(function(d) { return d.age; })   // I need to give the vector of value
+      .value(function(d) {if(d['income50k']===1){ return d.age;} })   // I need to give the vector of value
       .domain(x.domain())  // then the domain of the graphic
       .thresholds(x.ticks(10)); // then the numbers of bins
 
