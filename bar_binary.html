@@ -10,12 +10,14 @@
 
 </svg>
 <script>
-  var data = [4,8,15,16,23,42];
+  //var data = [4,8,15,16,23,42];
 	// Define margins and chart dimensions
+  d3.csv("data/adult_bin.csv").then(function(data) {
+	  
   const margin = { top: 50, right: 50, bottom: 50, left: 50 };
   const width = 300 - margin.left - margin.right;
   const height = 300 - margin.top - margin.bottom;
-  const dmax = d3.max(data);
+  const dmax = d3.max(data.age);
 
   // Create SVG element
   //const svg = d3.select("#my_dataviz").append("svg");
@@ -41,7 +43,7 @@
 
   // Create bars based on data
   g.selectAll("rect")
-    .data(data)
+    .data(data.age)
     .enter()
     .append("rect")
     .attr("x", (d, i) => xScale(i))  
@@ -57,7 +59,7 @@
    svg.append("g")
      .attr("transform", "translate(" + margin.left + "," + xheight + ")")
       .call(xAxis);
-
+  }
 </script>
 </body>
 </html>
