@@ -66,6 +66,20 @@ var pieGroup = svg.append("g")
       .attr("data-legend", function(d,i) { return legend_text[i]; })
       .attr("data-legend-pos", function(d, i) { return i; })
       .style("fill", function(d,i) { return color[i]; });
+
+    pieGroup.append("text")
+      .attr("transform", "translate(250,250)")
+      .attr("dy", ".35em")
+      .style("text-anchor", "middle");
+
+  var radius = 100;
+  var padding = 20,
+    legx = radius + padding,
+    legend = svg.append("g")
+    .attr("class", "legend")
+    .attr("transform", "translate(" + legx + ", 0)")
+    .style("font-size", "12px")
+    .call(d3.legend);
    
 });
 
