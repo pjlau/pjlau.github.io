@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<embed type="text/html" src="poor_rich_pie.html" width="500" height="300" id="embed" />
+
+<button id="test1">Test1</button>
+<button id="test2">Test2</button>
+
+<script>
+  const test1 = document.getElementById("test1");
+  const test2 = document.getElementById("test2");
+  const embed = document.getElementById("embed");
+
+  test1.addEventListener("click", (e) => {
+    embed.src = "histogram_age0.html";
+  });
+
+  test2.addEventListener("click", (e) => {
+    embed.src = "histogram_age1.html";
+  });
+</script>
+</body>
+</html>
