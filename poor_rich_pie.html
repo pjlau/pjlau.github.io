@@ -62,30 +62,12 @@ var pieGroup = svg.append("g")
         .attr("fill", function(d, i) { return color[i]; })  // Set color based on color array
 
 
-    var legendG = pieGroup.selectAll(".legend")
-        .data(pieData)
-        .enter()
-        .append("g")
-        .attr("transform", function(d,i){
-            return "translate(" + (-250) + "," + (i * 15 + 20) + ")";
-        })
-        .attr("class", "legend");  
+    // Insert text in svg
+	svg.append('text').attr('x', 10).attr('y', 20).style('fill', 'steelblue').style('font-size', '24px').style('font-weight', 'bold').text('Happy');
 
 
-  legendG.append("rect")
-      .attr("width", 10)
-      .attr("height", 10)
-      .attr("fill",  function(d) { 
-      return color(d.value); 
-      });
-
-   legendG.append("text")
-      .text(function(d,i){ 
-        return legend_text[i];
-      })
-      .style("font-size", 12)
-      .attr("y", 10)
-      .attr("x", 11);
+  
+   
 
   
    
