@@ -46,7 +46,8 @@ d3.csv("data/adult_bin.csv", function(data) {
   // Define x-axis scale
   const xScale = d3.scaleBand()
     .domain([0, 1])
-    .range([0, width]);
+    .range([0, width])
+    .padding(0.2);
   const yScale = d3.scaleLinear()
     .domain([0, dmax])
     .range([height,0]);
