@@ -33,7 +33,7 @@ d3.csv("data/adult_bin.csv", function(data) {
   var bar_viz = [data0_poor_len/data0_len, data1_poor_len/data1_len];
 	// Define margins and chart dimensions
   
-  //const dmax = d3.max(bar_viz);
+  const dmax = d3.max(bar_viz);
 
   // Create SVG element
   //const svg = d3.select("#my_dataviz").append("svg");
