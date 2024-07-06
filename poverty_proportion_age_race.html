@@ -61,9 +61,9 @@ d3.csv("data/adult_bin.csv", function(data) {
     .enter()
     .append("rect")
     .attr("x", (d, i) => xScale(i))  
-    .attr("y", d => height*d/dmax)  // Position bars from top (y-axis)
+    .attr("y", d => height - height*d/dmax)  // Position bars from top (y-axis)
     .attr("width", xScale.bandwidth())  // Set width using scale's bandwidth
-    .attr("height", d => height - height*d/dmax);  // Set height based on data value
+    .attr("height", d => height*d/dmax);  // Set height based on data value
 
    svg.append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
