@@ -24,11 +24,11 @@ var svg = d3.select("#my_dataviz")
 d3.csv("data/adult_bin.csv", function(data) {
 
   //var survival_count =  my_data.filter(function(m){if(m[data_class]==d && m.survived == 1){return m}}).length;
-  var data0_poor_len = data.filter(function(d){if(d['income50k']==0 && d['race']=="White" && d['gender']=="Male"){return d}}).length;
-  var data1_poor_len = data.filter(function(d){if(d['income50k']==0 && d['race']=="Black" && d['gender']=="Female"){return d}}).length;
+  var data0_poor_len = data.filter(function(d){if(d['income50k']==0 && d['age']>=40 && d['age']<50 && d['educational-num']>=15 && d['gender']=="Male" && d['relationship']=="Husband"){return d}}).length;
+  var data1_poor_len = data.filter(function(d){if(d['income50k']==0 && d['age']>=20 && d['age']<30 && d['educational-num']<=9 && d['gender']=="Female" && d['relationship']=="Unmarried"){return d}}).length;
   //var data_len = data.length;
-  var data0_len = data.filter(function(d){if(d['race']=="White" && d['gender']=="Male"){return d}}).length;
-  var data1_len = data.filter(function(d){if(d['race']=="Black" && d['gender']=="Female"){return d}}).length;
+  var data0_len = data.filter(function(d){if(d['age']>=40 && d['age']<50 && d['educational-num']>=15 && d['gender']=="Male" && d['relationship']=="Husband"){return d}}).length;
+  var data1_len = data.filter(function(d){if(d['age']>=20 && d['age']<30 && d['educational-num']<=9 && d['gender']=="Female" && d['relationship']=="Unmarried"){return d}}).length;
 	
   var bar_viz = [data0_poor_len/data0_len, data1_poor_len/data1_len];
 	// Define margins and chart dimensions
