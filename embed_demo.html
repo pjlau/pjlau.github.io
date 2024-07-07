@@ -4,11 +4,13 @@
 
 <embed type="text/html" src="poor_rich_pie.html" width="600" height="600" id="embed" />
 
-<button id="test1">Age Hist <= 50k </button>
-<button id="test2">Age Hist > 50k </button>
+<button id="test1"> Age Hist <= 50k </button>
+<button id="test2"> Age Hist > 50k </button>
+<button id="test3"> Poverty: Edu </button>
+<button id="test4"> Poverty: Edu, Age, Rel, Gen </button>
 
 <h2> Adult Income Dataset </h2>
-
+  
 <h3> This dataset was extracted by Barry Becker from the 1994 Census database.
 
 It is widely used for predicting whether income exceeds $50K/yr based on census data.
@@ -18,6 +20,8 @@ The original dataset can be found in UCI Machine Learning Repository https://arc
 <script>
   const test1 = document.getElementById("test1");
   const test2 = document.getElementById("test2");
+  const test3 = document.getElementById("test3");
+  const test4 = document.getElementById("test4");
   const embed = document.getElementById("embed");
 
   test1.addEventListener("click", (e) => {
@@ -27,6 +31,15 @@ The original dataset can be found in UCI Machine Learning Repository https://arc
   test2.addEventListener("click", (e) => {
     embed.src = "histogram_age1.html";
   });
+
+  test3.addEventListener("click", (e) => {
+    embed.src = "poverty_edu.html";
+  });
+
+  test4.addEventListener("click", (e) => {
+    embed.src = "poverty_age_edu_rel_gender.html";
+  });
+  
 </script>
 </body>
 </html>
