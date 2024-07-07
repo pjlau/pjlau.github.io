@@ -2,8 +2,9 @@
 <html>
 <body>
 
-<embed type="text/html" src="poor_rich_pie.html" width="600" height="600" id="embed" />
+<embed type="text/html" src="intro.html" width="600" height="600" id="embed" />
 
+<button id="intro"> Intro </button>
 <button id="test0"> Rich Poor Pie </button>
 <button id="test1"> Age Hist <= 50k </button>
 <button id="test2"> Age Hist > 50k </button>
@@ -19,6 +20,8 @@ It is widely used for predicting whether income exceeds $50K/yr based on census 
 The original dataset can be found in UCI Machine Learning Repository https://archive.ics.uci.edu/dataset/2/adult </h3>
 
 <script>
+
+  const intro = document.getElementById("intro");
   const test0 = document.getElementById("test0");
   const test1 = document.getElementById("test1");
   const test2 = document.getElementById("test2");
@@ -26,6 +29,10 @@ The original dataset can be found in UCI Machine Learning Repository https://arc
   const test4 = document.getElementById("test4");
   const embed = document.getElementById("embed");
 
+  intro.addEventListener("click", (e) => {
+    embed.src = "intro.html";
+  });
+  
   test0.addEventListener("click", (e) => {
     embed.src = "poor_rich_pie.html";
   });
