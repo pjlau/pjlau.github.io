@@ -99,7 +99,9 @@ var pieGroup = svg.append("g")
 
       // Bind data to pie chart slices and create paths
      pieGroup.selectAll("path")
-      .data(pieData)
+      .datum(pieData)
+      .transition()
+      .duration(1000)
       .enter()
       .append("path")
         .attr("d", arc)  // Use arc generator to define path
