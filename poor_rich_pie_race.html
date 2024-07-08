@@ -17,7 +17,7 @@ var color = ['lightgreen','lightcyan','lightblue','violet'];
 	// set the dimensions and margins of the graph
 var margin = {top: 200, right: 30, bottom: 30, left: 200},
     width = 500 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
+    height = 400 - margin.top - margin.bottom;
 
 // append the svg object to the body of the page
 var svg = d3.select("#my_dataviz")
@@ -93,8 +93,8 @@ var pieGroup = svg.append("g")
       var data0_len_u = data.filter(function(d){if(d['income50k']==0 && d['race']==selectedGroup){return d}}).length;
       //var data1_len_u = data.filter(function(d){if(d['income50k']==1 && d['race']==selectedGroup){return d}}).length;
       var data_len_u =  data.filter(function(d){if(d['race']==selectedGroup){return d}}).length;
-      var data1_len_u = data_len_u - data0_len_u;
-      var pie_viz_u = [data0_len_u/data_len_u, data1_len_u/data_len_u];
+      //var data1_len_u = data_len_u - data0_len_u;
+      var pie_viz_u = [data0_len_u/data_len_u, 1-data0_len_u/data_len_u];
 
       // Define the pie chart layout
       var pie_u = d3.pie();
