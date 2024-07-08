@@ -7,6 +7,9 @@
 <script src="https://d3js.org/d3.v4.js"></script>
 <!-- Create a div where the graph will take place -->
 <div id="my_dataviz"></div>
+
+<!-- Initialize a select button -->
+<select id="selectButton"></select>
 <script>
 
 //var color = ['pink','lightyellow','lightgreen','lightcyan','lightblue','violet'];
@@ -26,6 +29,19 @@ var svg = d3.select("#my_dataviz")
 // get the data
 d3.csv("data/adult_bin.csv", function(data) {
 
+  // List of groups (here I have one group per column)
+  var allGroup = d3.map(data, function(d){return(d.race)}).keys()
+
+   // add the options to the button
+    d3.select("#selectButton")
+      .selectAll('myOptions')
+     	.data(allGroup)
+      .enter()
+    	.append('option')
+      .text(function (d) { return d; }) // text showed in the menu
+      .attr("value", function (d) { return d; }) // corresponding value returned by the button
+
+	
   //var survival_count =  my_data.filter(function(m){if(m[data_class]==d && m.survived == 1){return m}}).length;
   var data0_len = data.filter(function(d){if(d['income50k']==0){return d}}).length;
   var data1_len = data.filter(function(d){if(d['income50k']==1){return d}}).length;
@@ -63,13 +79,40 @@ var pieGroup = svg.append("g")
 
 
     // Insert text in svg
-	svg.append('text').attr('x', 330).attr('y', 200).style('fill', 'steelblue').style('font-size', '24px').style('font-weight', 'bold').text('76%, <=50k');
+	// svg.append('text').attr('x', 330).attr('y', 200).style('fill', 'steelblue').style('font-size', '24px').style('font-weight', 'bold').text('76%, <=50k');
 	
-	svg.append('text').attr('x', 100).attr('y', 80).style('fill', 'steelblue').style('font-size', '24px').style('font-weight', 'bold').text('24%, >50k');
+	// svg.append('text').attr('x', 100).attr('y', 80).style('fill', 'steelblue').style('font-size', '24px').style('font-weight', 'bold').text('24%, >50k');
 
+// A function that update the chart
+    function update(selectedGroup) {
 
+      // Create new data with the selection?
+      //var dataFilter = data.filter(function(d){return d.race==selectedGroup})
+
+      var data0_len = data.filter(function(d){if(d['income50k']==0 && d.race==selectedGroup){return d}}).length;
+      var data1_len = data.filter(function(d){if(d['income50k']==1 && d.race==selectedGroup){return d}}).length;
+      var data_len =  data.filter(function(d){if(d.race==selectedGroup){return d}}).length;
+      var pie_viz = [data0_len/data_len, data1_len/data_len];
+      
+      // Create pie chart data based on input data
+      var pieData = pie(pie_viz);
+
+      // Bind data to pie chart slices and create paths
+     pieGroup.selectAll("path")
+      .data(pieData)
+      .enter()
+      .append("path")
+        .attr("d", arc)  // Use arc generator to define path
+        .attr("fill", function(d, i) { return color[i]; })  // Set color based on color array
+    }
   
-   
+   // When the button is changed, run the updateChart function
+    d3.select("#selectButton").on("change", function(d) {
+        // recover the option that has been chosen
+        var selectedOption = d3.select(this).property("value")
+        // run the updateChart function with this selected option
+        update(selectedOption)
+    })
 
   
    
