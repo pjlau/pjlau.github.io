@@ -67,10 +67,8 @@ d3.csv("data/adult_bin.csv", function(data) {
 
 // Create a group element to hold pie chart slices
 var pieGroup = svg.append("g")
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-    // Bind data to pie chart slices and create paths
-    pieGroup.selectAll("path")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+      .selectAll("path")
       .data(pieData)
       .enter()
 	.append("path")
@@ -106,17 +104,15 @@ var pieGroup = svg.append("g")
       var pieData_u = pie_u(pie_viz_u);
 
       // Create a group element to hold pie chart slices
-      var pieGroup_u = svg.append("g")
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+      //var pieGroup_u = svg.append("g")
+      //.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
      
     
       // Bind data to pie chart slices and create paths
-     pieGroup_u.selectAll("path")
+     pieGroup
       .data(pieData_u)
       .transition()
       .duration(1000)
-      .enter()
-      .append("path")
         .attr("d", arc_u)  // Use arc generator to define path
         .attr("fill", function(d, i) { return color[i]; })  // Set color based on color array
     }
