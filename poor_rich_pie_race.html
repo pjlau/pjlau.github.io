@@ -81,8 +81,8 @@ var pieGroup = svg.append("g")
 	
 	// svg.append('text').attr('x', 100).attr('y', 80).style('fill', 'steelblue').style('font-size', '24px').style('font-weight', 'bold').text('24%, >50k');
 
-	svg.append('text').attr('x', 330).attr('y', 200).style('fill', 'lightgreen').style('font-size', '24px').style('font-weight', 'bold').text('<=50k');
-	svg.append('text').attr('x', 100).attr('y', 80).style('fill', 'lightcyan').style('font-size', '24px').style('font-weight', 'bold').text('>50k');
+	svg.append('text').attr('x', 330).attr('y', 200).style('fill', 'black').style('font-size', '24px').style('font-weight', 'bold').text('Green: <=50k');
+	svg.append('text').attr('x', 330).attr('y', 180).style('fill', 'black').style('font-size', '24px').style('font-weight', 'bold').text('Cyan: >50k');
 	
 // A function that update the chart
     function update(selectedGroup) {
@@ -91,8 +91,9 @@ var pieGroup = svg.append("g")
       //var dataFilter = data.filter(function(d){return d.race==selectedGroup})
 
       var data0_len_u = data.filter(function(d){if(d['income50k']==0 && d['race']==selectedGroup){return d}}).length;
-      var data1_len_u = data.filter(function(d){if(d['income50k']==1 && d['race']==selectedGroup){return d}}).length;
+      //var data1_len_u = data.filter(function(d){if(d['income50k']==1 && d['race']==selectedGroup){return d}}).length;
       var data_len_u =  data.filter(function(d){if(d['race']==selectedGroup){return d}}).length;
+      var data1_len_u = data_len_u - data0_len_u;
       var pie_viz_u = [data0_len_u/data_len_u, data1_len_u/data_len_u];
 
       // Define the pie chart layout
