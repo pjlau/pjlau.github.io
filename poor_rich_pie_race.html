@@ -43,9 +43,9 @@ d3.csv("data/adult_bin.csv", function(data) {
 
 	
   //var survival_count =  my_data.filter(function(m){if(m[data_class]==d && m.survived == 1){return m}}).length;
-  var data0_len = data.filter(function(d){if(d['income50k']==0){return d}}).length;
-  var data1_len = data.filter(function(d){if(d['income50k']==1){return d}}).length;
-  var data_len = data.length;
+  var data0_len = data.filter(function(d){if(d['income50k']==0 && d['race']=='Black'){return d}}).length;
+  var data1_len = data.filter(function(d){if(d['income50k']==1 && d['race']=='Black'){return d}}).length;
+  var data_len = data.filter(function(d){if(d['race']=='Black'){return d}}).length;
 
   var pie_viz = [data0_len/data_len, data1_len/data_len];
 	// Define margins and chart dimensions
@@ -93,10 +93,20 @@ var pieGroup = svg.append("g")
       var data1_len = data.filter(function(d){if(d['income50k']==1 && d.race==selectedGroup){return d}}).length;
       var data_len =  data.filter(function(d){if(d.race==selectedGroup){return d}}).length;
       var pie_viz = [data0_len/data_len, data1_len/data_len];
-      
+
+      // Define the pie chart layout
+      var pie = d3.pie();
+
+      // Define the arc generator (adjusted for inner radius)
+      var arc = d3.arc()
+      .innerRadius(0)
+      .outerRadius(100);
+	    
       // Create pie chart data based on input data
       var pieData = pie(pie_viz);
+      
 
+    
       // Bind data to pie chart slices and create paths
      pieGroup.selectAll("path")
       .datum(pieData)
