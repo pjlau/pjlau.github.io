@@ -103,14 +103,12 @@ var pieGroup = svg.append("g")
       .outerRadius(100);
 	    
       // Create pie chart data based on input data
-      var pieData_u = pie_u(pie_viz);
+      var pieData_u = pie_u(pie_viz_u);
       
-     // Create a group element to hold pie chart slices
-     var pieGroup_u = svg.append("g")
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+     
     
       // Bind data to pie chart slices and create paths
-     pieGroup_u.selectAll("path")
+     pieGroup.selectAll("path")
       .data(pieData_u)
       .transition()
       .duration(1000)
