@@ -70,9 +70,10 @@ var pieGroup = svg.append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     // Bind data to pie chart slices and create paths
-    pieGroup.append("path")
+    pieGroup.selectAll("path")
       .data(pieData)
       .enter()
+	.append("path")
         .attr("d", arc)  // Use arc generator to define path
         .attr("fill", function(d, i) { return color[i]; })  // Set color based on color array
 
@@ -104,14 +105,17 @@ var pieGroup = svg.append("g")
       // Create pie chart data based on input data
       var pieData_u = pie_u(pie_viz);
       
-
+     // Create a group element to hold pie chart slices
+     var pieGroup_u = svg.append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
     
       // Bind data to pie chart slices and create paths
-     pieGroup.append("path")
+     pieGroup_u.selectAll("path")
       .data(pieData_u)
       .transition()
       .duration(1000)
       .enter()
+      .append("path")
         .attr("d", arc_u)  // Use arc generator to define path
         .attr("fill", function(d, i) { return color[i]; })  // Set color based on color array
     }
