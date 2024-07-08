@@ -88,31 +88,31 @@ var pieGroup = svg.append("g")
       // Create new data with the selection?
       //var dataFilter = data.filter(function(d){return d.race==selectedGroup})
 
-      var data0_len = data.filter(function(d){if(d['income50k']==0 && d['race']==selectedGroup){return d}}).length;
-      var data1_len = data.filter(function(d){if(d['income50k']==1 && d['race']==selectedGroup){return d}}).length;
-      var data_len =  data.filter(function(d){if(d['race']==selectedGroup){return d}}).length;
-      var pie_viz = [data0_len/data_len, data1_len/data_len];
+      var data0_len_u = data.filter(function(d){if(d['income50k']==0 && d['race']==selectedGroup){return d}}).length;
+      var data1_len_u = data.filter(function(d){if(d['income50k']==1 && d['race']==selectedGroup){return d}}).length;
+      var data_len_u =  data.filter(function(d){if(d['race']==selectedGroup){return d}}).length;
+      var pie_viz_u = [data0_len_u/data_len_u, data1_len_u/data_len_u];
 
       // Define the pie chart layout
-      var pie = d3.pie();
+      var pie_u = d3.pie();
 
       // Define the arc generator (adjusted for inner radius)
-      var arc = d3.arc()
+      var arc_u = d3.arc()
       .innerRadius(0)
       .outerRadius(100);
 	    
       // Create pie chart data based on input data
-      var pieData = pie(pie_viz);
+      var pieData_u = pie_u(pie_viz);
       
 
     
       // Bind data to pie chart slices and create paths
      pieGroup.append("path")
-      .data(pieData)
+      .data(pieData_u)
       .transition()
       .duration(1000)
       .enter()
-        .attr("d", arc)  // Use arc generator to define path
+        .attr("d", arc_u)  // Use arc generator to define path
         .attr("fill", function(d, i) { return color[i]; })  // Set color based on color array
     }
   
