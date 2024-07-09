@@ -123,7 +123,7 @@ d3.csv("data/adult.csv", function(data) {
 	
       }
 	    
-      const dmax_u = d3.max(bar_viz_u);
+      const dmax = d3.max(bar_viz_u);
 
       // Create bars based on data
       g.selectAll("rect")
@@ -131,9 +131,9 @@ d3.csv("data/adult.csv", function(data) {
     .transition()
     .duration(1000)
     .attr("x", (d, i) => xScale(i))  
-    .attr("y", d => height - height*d/dmax_u)  // Position bars from top (y-axis)
+    .attr("y", d => height - height*d/dmax)  // Position bars from top (y-axis)
     .attr("width", xScale.bandwidth())  // Set width using scale's bandwidth
-    .attr("height", d => height*d/dmax_u);  // Set height based on data value
+    .attr("height", d => height*d/dmax);  // Set height based on data value
       // Create a group element to hold pie chart slices
       //var pieGroup_u = svg.append("g")
       //.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
