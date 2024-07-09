@@ -80,7 +80,7 @@ d3.csv("data/adult.csv", function(data) {
     .domain([0, dmax])
     .range([height,0]);
 
-  const xAxis = d3.axisBottom(xScale).tickValues([1,2,3,4,5]);
+  const xAxis = d3.axisBottom(xScale).ticks(raceGroup.length).tickFormat(function(d,i){return raceGroup[i];});
   const yAxis = d3.axisLeft(yScale);
 
   // Create bars based on data
