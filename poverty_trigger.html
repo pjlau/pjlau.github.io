@@ -27,9 +27,9 @@ d3.csv("data/adult_bin.csv", function(data) {
 
   svg.append('text').attr('x', 320).attr('y', 160).style('fill', 'black').style('font-size', '24px').style('font-weight', 'bold').text(console.log(raceGroup.length));
   
-  const data_poor_race = new Array(raceGroup.length);
-  const data_race = new Array(raceGroup.length);
-  const bar_viz = new Array(raceGroup.length);
+  var data_poor_race = new Array(raceGroup.length);
+  var data_race = new Array(raceGroup.length);
+  var bar_viz = new Array(raceGroup.length);
   
   for (let i = 0; i < raceGroup.length; i++) {
   	//text += cars[i] + "<br>";
