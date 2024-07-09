@@ -22,7 +22,9 @@ var svg = d3.select("#my_dataviz")
 
 // get the data
 d3.csv("data/adult_bin.csv", function(data) {
-
+	
+  var raceGroup = d3.map(data, function(d){return(d.race)}).keys();
+	
   //var survival_count =  my_data.filter(function(m){if(m[data_class]==d && m.survived == 1){return m}}).length;
   var data0_poor_len = data.filter(function(d){if(d['income50k']==0 && d['age']>=40 && d['age']<50 && d['educational-num']>=15 && d['gender']=="Male" && d['relationship']=="Husband"){return d}}).length;
   var data1_poor_len = data.filter(function(d){if(d['income50k']==0 && d['age']>=20 && d['age']<30 && d['educational-num']<=9 && d['gender']=="Female" && d['relationship']=="Unmarried"){return d}}).length;
