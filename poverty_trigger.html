@@ -105,25 +105,25 @@ d3.csv("data/adult.csv", function(data) {
    // A function that update the chart
     function update(selectedGroup) {
 	    
-      var data_poor_race_u = new Array(raceGroup.length);
-      var data_race_u = new Array(raceGroup.length);
-      var bar_viz_u = new Array(raceGroup.length);
+      //var data_poor_race_u = new Array(raceGroup.length);
+      //var data_race_u = new Array(raceGroup.length);
+      //var bar_viz_u = new Array(raceGroup.length);
       // Create new data with the selection?
       //var dataFilter = data.filter(function(d){return d.race==selectedGroup})
       for (let i = 0; i < raceGroup.length; i++) {
   	//text += cars[i] + "<br>";
-	data_poor_race_u[i] = data.filter(function(d){if(d['income']===incomeGroup[0] && d['relationship']=='Unmarried' && d['race']===raceGroup[i] && d['educational-num']>=parseInt(selectedGroup)){return d}}).length;
-        data_race_u[i] = data.filter(function(d){if(d['race']===raceGroup[i] && d['relationship']=='Unmarried' && d['educational-num']>=parseInt(selectedGroup)){return d}}).length;
-	if (data_race_u[i] == 0){
-	    bar_viz_u[i] = 0;
+	data_poor_race[i] = data.filter(function(d){if(d['income']===incomeGroup[0] && d['relationship']=='Unmarried' && d['race']===raceGroup[i] && d['educational-num']>=parseInt(selectedGroup)){return d}}).length;
+        data_race[i] = data.filter(function(d){if(d['race']===raceGroup[i] && d['relationship']=='Unmarried' && d['educational-num']>=parseInt(selectedGroup)){return d}}).length;
+	if (data_race[i] == 0){
+	    bar_viz[i] = 0;
 	}
 	else{
-	    bar_viz_u[i] = data_poor_race_u[i]/data_race_u[i];
+	    bar_viz[i] = data_poor_race[i]/data_race[i];
         }
 	
       }
 	    
-      const dmax = d3.max(bar_viz_u);
+      const dmax = d3.max(bar_viz);
 
       // Create bars based on data
       g.selectAll("rect")
