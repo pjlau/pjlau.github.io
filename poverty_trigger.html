@@ -127,7 +127,7 @@ d3.csv("data/adult.csv", function(data) {
 
       // Create bars based on data
       g.selectAll("rect")
-    .data(bar_viz_u)
+    .data(bar_viz)
     .transition()
     .duration(1000)
     .attr("x", (d, i) => xScale(i))  
