@@ -86,7 +86,13 @@ d3.csv("data/adult_bin.csv", function(data) {
       // Create new data with the selection?
       var dataFilter = data.filter(function(d){return d['income']==selectedGroup});
 
-
+      // X axis: scale and draw:
+      var x = d3.scaleLinear()
+      .domain([0, 100])     // can use this instead of 1000 to have the max of data: d3.max(data, function(d) { return +d.price })
+      .range([0, width]);
+  svg.append("g")
+      .attr("transform", "translate(0," + height + ")")
+      .call(d3.axisBottom(x));
       
       // set the parameters for the histogram
       var histogram_u = d3.histogram()
@@ -96,6 +102,13 @@ d3.csv("data/adult_bin.csv", function(data) {
 
      // And apply this function to data to get the bins
       var bins_u = histogram_u(dataFilter);
+
+     // Y axis: scale and draw:
+      var y = d3.scaleLinear()
+      .range([height, 0]);
+      y.domain([0, d3.max(bins_u, function(d) { return d.length; })]);   // d3.hist has to be called before the Y axis obviously
+       svg.append("g")
+      .call(d3.axisLeft(y));
 
 	    
       // Give these new data to update line
