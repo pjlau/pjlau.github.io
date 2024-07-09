@@ -97,8 +97,8 @@ d3.csv("data/adult_bin.csv", function(data) {
       // set the parameters for the histogram
       var histogram_u = d3.histogram()
       .value(function(d) {if(d['income']==selectedGroup){ return d.age;} })   // I need to give the vector of value
-      .domain(x_u.domain())  // then the domain of the graphic
-      .thresholds(x_u.ticks(10)); // then the numbers of bins
+      .domain(x.domain())  // then the domain of the graphic
+      .thresholds(x.ticks(10)); // then the numbers of bins
 
      // And apply this function to data to get the bins
       var bins_u = histogram_u(dataFilter);
