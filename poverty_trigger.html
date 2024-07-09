@@ -46,8 +46,8 @@ d3.csv("data/adult_bin.csv", function(data) {
 	
   for (let i = 0; i < raceGroup.length; i++) {
   	//text += cars[i] + "<br>";
-	data_poor_race[i] = data.filter(function(d){if(d['income50k']==0 && d['race']===raceGroup[i] && d['educational-num']>=15){return d}}).length;
-        data_race[i] = data.filter(function(d){if(d['race']===raceGroup[i] && d['educational-num']>=15){return d}}).length;
+	data_poor_race[i] = data.filter(function(d){if(d['income50k']==0 && d['race']===raceGroup[i] && d['educational-num']>=1){return d}}).length;
+        data_race[i] = data.filter(function(d){if(d['race']===raceGroup[i] && d['educational-num']>=1){return d}}).length;
 	bar_viz[i] = data_poor_race[i]/data_race[i];
   }
   //var survival_count =  my_data.filter(function(m){if(m[data_class]==d && m.survived == 1){return m}}).length;
