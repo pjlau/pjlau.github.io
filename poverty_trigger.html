@@ -57,10 +57,10 @@ d3.csv("data/adult_bin.csv", function(data) {
   
   const g = svg.append("g")
 .attr("transform", "translate(" + margin.left + "," + margin.top + ")");  
-  //const xdom = Array(raceGroup.length).fill(0).map((e,i)=>e+(i*1));
+  const xdom = Array(raceGroup.length).fill(0).map((e,i)=>e+(i*1));
   // Define x-axis scale
   const xScale = d3.scaleBand()
-    .domain([0,raceGroup.length-1])
+    .domain(xdom)
     .range([0, width])
     .padding(0.2);
   const yScale = d3.scaleLinear()
