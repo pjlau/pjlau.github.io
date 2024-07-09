@@ -70,7 +70,7 @@ d3.csv("data/adult_bin.csv", function(data) {
       .call(d3.axisLeft(y));
 
   // append the bar rectangles to the svg element
-  svg.selectAll("rect")
+  var hist_plot = svg.selectAll("rect")
       .data(bins)
       .enter()
       .append("rect")
@@ -87,15 +87,15 @@ d3.csv("data/adult_bin.csv", function(data) {
       var dataFilter = data.filter(function(d){return d.income==selectedGroup})
 
       // Give these new data to update line
-      line
+      hist_plot
           .datum(dataFilter)
           .transition()
           .duration(1000)
-          .attr("d", d3.line()
-            .x(function(d) { return x(d.year) })
-            .y(function(d) { return y(+d.n) })
-          )
-          .attr("stroke", function(d){ return myColor(selectedGroup) })
+          .attr("x", 1)
+        .attr("transform", function(d) { return "translate(" + x(d.x0) + "," + y(d.length) + ")"; })
+        .attr("width", function(d) { return x(d.x1) - x(d.x0) -1 ; })
+        .attr("height", function(d) { return height - y(d.length); })
+        .style("fill", "#69b3a2");
     }
 
     // When the button is changed, run the updateChart function
