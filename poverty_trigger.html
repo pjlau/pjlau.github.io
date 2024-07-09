@@ -77,7 +77,7 @@ d3.csv("data/adult.csv", function(data) {
     .range([0, width])
     .padding(0.2);
   const yScale = d3.scaleLinear()
-    .domain([0, dmax])
+    .domain([0, 1])
     .range([height,0]);
 
   const xAxis = d3.axisBottom(xScale).ticks(raceGroup.length).tickFormat(function(d,i){return raceGroup[i];});
