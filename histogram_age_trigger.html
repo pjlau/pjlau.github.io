@@ -84,7 +84,7 @@ d3.csv("data/adult_bin.csv", function(data) {
     function update(selectedGroup) {
 
       // Create new data with the selection?
-      var dataFilter = data.filter(function(d){return d.income==selectedGroup})
+      var dataFilter = data.filter(function(d){return d['income']==selectedGroup})
 
       // X axis: scale and draw:
       var x_u = d3.scaleLinear()
@@ -97,9 +97,9 @@ d3.csv("data/adult_bin.csv", function(data) {
       
       // set the parameters for the histogram
       var histogram_u = d3.histogram()
-      .value(function(d) {if(d.income==selectedGroup){ return d.age;} })   // I need to give the vector of value
-      .domain(x.domain())  // then the domain of the graphic
-      .thresholds(x.ticks(10)); // then the numbers of bins
+      .value(function(d) {if(d['income']==selectedGroup){ return d.age;} })   // I need to give the vector of value
+      .domain(x_u.domain())  // then the domain of the graphic
+      .thresholds(x_u.ticks(10)); // then the numbers of bins
 
      // And apply this function to data to get the bins
       var bins_u = histogram_u(dataFilter);
@@ -114,7 +114,7 @@ d3.csv("data/adult_bin.csv", function(data) {
       // Give these new data to update line
       hist_plot
 	  .append("rect")
-          .datum(bins_u)
+          .data(bins_u)
           .transition()
           .duration(1000)
           .attr("x", 1)
