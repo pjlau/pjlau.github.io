@@ -114,7 +114,13 @@ d3.csv("data/adult.csv", function(data) {
   	//text += cars[i] + "<br>";
 	data_poor_race_u[i] = data.filter(function(d){if(d['income']===incomeGroup[0] && d['relationship']=='Unmarried' && d['race']===raceGroup[i] && d['educational-num']>=parseInt(selectedGroup)){return d}}).length;
         data_race_u[i] = data.filter(function(d){if(d['race']===raceGroup[i] && d['relationship']=='Unmarried' && d['educational-num']>=parseInt(selectedGroup)){return d}}).length;
-	bar_viz_u[i] = data_poor_race[i]/data_race[i];
+	if (data_race_u[i] == 0){
+	    bar_viz_u[i] = 0;
+	}
+	else{
+	    bar_viz_u[i] = data_poor_race[i]/data_race[i];
+        }
+	
       }
 	    
       const dmax_u = d3.max(bar_viz_u);
