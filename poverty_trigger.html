@@ -24,15 +24,26 @@ var svg = d3.select("#my_dataviz")
 d3.csv("data/adult_bin.csv", function(data) {
 	
   var raceGroup = d3.map(data, function(d){return(d.race)}).keys();
-	
+
+  
+  const data_poor_race = new Array(raceGroup.length);
+  const data_race = new Array(raceGroup.length);
+  const bar_viz = new Array(raceGroup.length);
+  
+  for (let i = 0; i < raceGroup.length; i++) {
+  	//text += cars[i] + "<br>";
+	data_poor_race[i] = data.filter(function(d){if(d['income50k']==0 && d['race']===raceGroup[i] && d['educational-num']>=15){return d}}).length;
+        data_race[i] = data.filter(function(d){if(d['race']===raceGroup[i] && d['educational-num']>=15){return d}}).length;
+	bar_viz[i] = data_poor_race[i]/data_race[i];
+  }
   //var survival_count =  my_data.filter(function(m){if(m[data_class]==d && m.survived == 1){return m}}).length;
-  var data0_poor_len = data.filter(function(d){if(d['income50k']==0 && d['age']>=40 && d['age']<50 && d['educational-num']>=15 && d['gender']=="Male" && d['relationship']=="Husband"){return d}}).length;
-  var data1_poor_len = data.filter(function(d){if(d['income50k']==0 && d['age']>=20 && d['age']<30 && d['educational-num']<=9 && d['gender']=="Female" && d['relationship']=="Unmarried"){return d}}).length;
-  //var data_len = data.length;
-  var data0_len = data.filter(function(d){if(d['age']>=40 && d['age']<50 && d['educational-num']>=15 && d['gender']=="Male" && d['relationship']=="Husband"){return d}}).length;
-  var data1_len = data.filter(function(d){if(d['age']>=20 && d['age']<30 && d['educational-num']<=9 && d['gender']=="Female" && d['relationship']=="Unmarried"){return d}}).length;
+  
+  //var data1_poor_len = data.filter(function(d){if(d['income50k']==0 && d['age']>=20 && d['age']<30 && d['educational-num']<=9 && d['gender']=="Female" && d['relationship']=="Unmarried"){return d}}).length;
+  
+  //var data0_len = data.filter(function(d){if(d['age']>=40 && d['age']<50 && d['educational-num']>=15 && d['gender']=="Male" && d['relationship']=="Husband"){return d}}).length;
+  //var data1_len = data.filter(function(d){if(d['age']>=20 && d['age']<30 && d['educational-num']<=9 && d['gender']=="Female" && d['relationship']=="Unmarried"){return d}}).length;
 	
-  var bar_viz = [data0_poor_len/data0_len, data1_poor_len/data1_len];
+  //var bar_viz = [data0_poor_len/data0_len, data1_poor_len/data1_len];
 	// Define margins and chart dimensions
   
   const dmax = d3.max(bar_viz);
@@ -44,10 +55,10 @@ d3.csv("data/adult_bin.csv", function(data) {
   
   const g = svg.append("g")
 .attr("transform", "translate(" + margin.left + "," + margin.top + ")");  
-
+  
   // Define x-axis scale
   const xScale = d3.scaleBand()
-    .domain([0, 1])
+    .domain(Array(raceGroup.length).fill(0).map((e,i)=>e+(i*1));)
     .range([0, width])
     .padding(0.2);
   const yScale = d3.scaleLinear()
