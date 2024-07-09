@@ -101,7 +101,44 @@ d3.csv("data/adult.csv", function(data) {
    svg.append("g")
      .attr("transform", "translate(" + margin.left + "," + xheight + ")")
       .call(xAxis);
-   
+
+   // A function that update the chart
+    function update(selectedGroup) {
+
+      // Create new data with the selection?
+      //var dataFilter = data.filter(function(d){return d.race==selectedGroup})
+      for (let i = 0; i < raceGroup.length; i++) {
+  	//text += cars[i] + "<br>";
+	data_poor_race[i] = data.filter(function(d){if(d['income']===incomeGroup[0] && d['race']===raceGroup[i] && d['educational-num']>=selectedGroup){return d}}).length;
+        data_race[i] = data.filter(function(d){if(d['race']===raceGroup[i] && d['educational-num']>=selectedGroup){return d}}).length;
+	bar_viz[i] = data_poor_race[i]/data_race[i];
+      }
+	    
+      const dmax = d3.max(bar_viz);
+
+      // Create bars based on data
+      g.selectAll("rect")
+    .data(bar_viz)
+    .transition()
+    .duration(1000)
+    .attr("x", (d, i) => xScale(i))  
+    .attr("y", d => height - height*d/dmax)  // Position bars from top (y-axis)
+    .attr("width", xScale.bandwidth())  // Set width using scale's bandwidth
+    .attr("height", d => height*d/dmax);  // Set height based on data value
+      // Create a group element to hold pie chart slices
+      //var pieGroup_u = svg.append("g")
+      //.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+     
+    
+    }
+  
+   // When the button is changed, run the updateChart function
+    d3.select("#selectButton").on("change", function(d) {
+        // recover the option that has been chosen
+        var selectedOption = d3.select(this).property("value")
+        // run the updateChart function with this selected option
+        update(selectedOption)
+    })
 });
 
 </script>
