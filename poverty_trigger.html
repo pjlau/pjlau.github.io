@@ -23,11 +23,12 @@ var svg = d3.select("#my_dataviz")
   
 
 // get the data
-d3.csv("data/adult_bin.csv", function(data) {
+d3.csv("data/adult.csv", function(data) {
 
   function compareNumbers(a, b) {
   	return a - b;
-  }	
+  }
+  var incomeGroup = d3.map(data, function(d){return(d.income)}).keys();
   var raceGroup = d3.map(data, function(d){return(d.race)}).keys();
   var eduGroup = d3.map(data, function(d){return(d['educational-num'])}).keys().map(Number).sort(compareNumbers);
   //svg.append('text').attr('x', 320).attr('y', 160).style('fill', 'black').style('font-size', '24px').style('font-weight', 'bold').text(String(raceGroup.length));
@@ -46,7 +47,7 @@ d3.csv("data/adult_bin.csv", function(data) {
 	
   for (let i = 0; i < raceGroup.length; i++) {
   	//text += cars[i] + "<br>";
-	data_poor_race[i] = data.filter(function(d){if(d['income50k']==0 && d['race']===raceGroup[i] && d['educational-num']>=1){return d}}).length;
+	data_poor_race[i] = data.filter(function(d){if(d['income']===incomeGroup[0] && d['race']===raceGroup[i] && d['educational-num']>=1){return d}}).length;
         data_race[i] = data.filter(function(d){if(d['race']===raceGroup[i] && d['educational-num']>=1){return d}}).length;
 	bar_viz[i] = data_poor_race[i]/data_race[i];
   }
