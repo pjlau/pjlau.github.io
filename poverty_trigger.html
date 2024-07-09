@@ -47,9 +47,14 @@ d3.csv("data/adult.csv", function(data) {
 	
   for (let i = 0; i < raceGroup.length; i++) {
   	//text += cars[i] + "<br>";
-	data_poor_race[i] = data.filter(function(d){if(d['income']===incomeGroup[0] && d['relationship']=='Husband' && d['race']===raceGroup[i] && d['educational-num']>=1){return d}}).length;
-        data_race[i] = data.filter(function(d){if(d['race']===raceGroup[i] && d['relationship']=='Husband' && d['educational-num']>=1){return d}}).length;
-	bar_viz[i] = data_poor_race[i]/data_race[i];
+	data_poor_race[i] = data.filter(function(d){if(d['income']===incomeGroup[0] && d['relationship']=='Husband' && d['race']===raceGroup[i] && d['educational-num']==1){return d}}).length;
+        data_race[i] = data.filter(function(d){if(d['race']===raceGroup[i] && d['relationship']=='Husband' && d['educational-num']==1){return d}}).length;
+	if (data_race[i] == 0){
+	    bar_viz[i] = 0;
+	}
+	else{
+	    bar_viz[i] = data_poor_race[i]/data_race[i];
+        }
   }
   //var survival_count =  my_data.filter(function(m){if(m[data_class]==d && m.survived == 1){return m}}).length;
   
@@ -112,8 +117,8 @@ d3.csv("data/adult.csv", function(data) {
       //var dataFilter = data.filter(function(d){return d.race==selectedGroup})
       for (let i = 0; i < raceGroup.length; i++) {
   	//text += cars[i] + "<br>";
-	data_poor_race[i] = data.filter(function(d){if(d['income']===incomeGroup[0] && d['relationship']=='Husband' && d['race']===raceGroup[i] && d['educational-num']>=selectedGroup){return d}}).length;
-        data_race[i] = data.filter(function(d){if(d['race']===raceGroup[i] && d['relationship']=='Husband' && d['educational-num']>=selectedGroup){return d}}).length;
+	data_poor_race[i] = data.filter(function(d){if(d['income']===incomeGroup[0] && d['relationship']=='Husband' && d['race']===raceGroup[i] && d['educational-num']==selectedGroup){return d}}).length;
+        data_race[i] = data.filter(function(d){if(d['race']===raceGroup[i] && d['relationship']=='Husband' && d['educational-num']==selectedGroup){return d}}).length;
 	if (data_race[i] == 0){
 	    bar_viz[i] = 0;
 	}
