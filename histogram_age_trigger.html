@@ -87,12 +87,12 @@ d3.csv("data/adult_bin.csv", function(data) {
       var dataFilter = data.filter(function(d){return d.income==selectedGroup})
 
       // X axis: scale and draw:
-      var x = d3.scaleLinear()
+      var x_u = d3.scaleLinear()
       .domain([0, 100])     // can use this instead of 1000 to have the max of data: d3.max(data, function(d) { return +d.price })
       .range([0, width]);
       svg.append("g")
       .attr("transform", "translate(0," + height + ")")
-      .call(d3.axisBottom(x));
+      .call(d3.axisBottom(x_u));
 
       
       // set the parameters for the histogram
@@ -105,11 +105,11 @@ d3.csv("data/adult_bin.csv", function(data) {
       var bins_u = histogram_u(dataFilter);
 
      // Y axis: scale and draw:
-      var y = d3.scaleLinear()
+      var y_u = d3.scaleLinear()
       .range([height, 0]);
-      y.domain([0, d3.max(bins_u, function(d) { return d.length; })]);   // d3.hist has to be called before the Y axis obviously
+      y_u.domain([0, d3.max(bins_u, function(d) { return d.length; })]);   // d3.hist has to be called before the Y axis obviously
        svg.append("g")
-      .call(d3.axisLeft(y));
+      .call(d3.axisLeft(y_u));
 	    
       // Give these new data to update line
       hist_plot
@@ -117,9 +117,9 @@ d3.csv("data/adult_bin.csv", function(data) {
           .transition()
           .duration(1000)
           .attr("x", 1)
-        .attr("transform", function(d) { return "translate(" + x(d.x0) + "," + y(d.length) + ")"; })
-        .attr("width", function(d) { return x(d.x1) - x(d.x0) -1 ; })
-        .attr("height", function(d) { return height - y(d.length); })
+        .attr("transform", function(d) { return "translate(" + x_u(d.x0) + "," + y_u(d.length) + ")"; })
+        .attr("width", function(d) { return x_u(d.x1) - x_u(d.x0) -1 ; })
+        .attr("height", function(d) { return height - y_u(d.length); })
         .style("fill", "#69b3a2");
     }
 
