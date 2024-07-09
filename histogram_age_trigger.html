@@ -27,7 +27,7 @@ var svg = d3.select("#my_dataviz")
           "translate(" + margin.left + "," + margin.top + ")");
 
 // get the data
-d3.csv("data/adult_bin.csv", function(data) {
+d3.csv("data/adult.csv", function(data) {
 
   // List of groups (here I have one group per column)
   var allGroup = d3.map(data, function(d){return(d.income)}).keys()
@@ -42,7 +42,7 @@ d3.csv("data/adult_bin.csv", function(data) {
       .attr("value", function (d) { return d; }) // corresponding value returned by the button
 	
   //var survival_count =  my_data.filter(function(m){if(m[data_class]==d && m.survived == 1){return m}}).length;
-  var data0 = data.filter(function(d){if(d['income50k']==0){return d}});
+  var data0 = data.filter(function(d){if(d['income']==allGroup[0]){return d}});
   
 
   // X axis: scale and draw:
