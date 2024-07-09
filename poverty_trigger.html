@@ -25,6 +25,7 @@ d3.csv("data/adult_bin.csv", function(data) {
 	
   var raceGroup = d3.map(data, function(d){return(d.race)}).keys();
 
+  svg.append('text').attr('x', 320).attr('y', 160).style('fill', 'black').style('font-size', '24px').style('font-weight', 'bold').text(String(raceGroup.length));
   
   const data_poor_race = new Array(raceGroup.length);
   const data_race = new Array(raceGroup.length);
