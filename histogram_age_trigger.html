@@ -113,6 +113,7 @@ d3.csv("data/adult_bin.csv", function(data) {
 	    
       // Give these new data to update line
       hist_plot
+	  .append("rect")
           .datum(bins_u)
           .transition()
           .duration(1000)
