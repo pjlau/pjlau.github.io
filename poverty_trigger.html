@@ -116,16 +116,6 @@ d3.csv("data/adult.csv", function(data) {
 	    
       const dmax = d3.max(bar_viz);
 
-      const xScale = d3.scaleBand()
-    .domain(xdom)
-    .range([0, width])
-    .padding(0.2);
-  const yScale = d3.scaleLinear()
-    .domain([0, dmax])
-    .range([height,0]);
-
-  const xAxis = d3.axisBottom(xScale);
-  const yAxis = d3.axisLeft(yScale);
       // Create bars based on data
       g.selectAll("rect")
     .data(bar_viz)
@@ -139,14 +129,6 @@ d3.csv("data/adult.csv", function(data) {
       //var pieGroup_u = svg.append("g")
       //.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    svg.append("g")
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-      .call(yAxis); 
-    const xheight = height + margin.top;
-    
-   svg.append("g")
-     .attr("transform", "translate(" + margin.left + "," + xheight + ")")
-      .call(xAxis);
     
     }
   
