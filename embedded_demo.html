@@ -74,8 +74,6 @@ d3.csv("data/adult.csv", function(data) {
   var allGroup = d3.map(data, function(d){return(d.race)}).keys()
   var incomeGroup = d3.map(data, function(d){return(d.income)}).keys()
    
-   // Unbind data from the options
-   d3.select("#selectButton").exit().remove();
 	
    // add the options to the button
     d3.select("#selectButton")
@@ -202,13 +200,19 @@ d3.csv("data/adult.csv", function(data) {
   // List of groups (here I have one group per column)
   var allGroup = d3.map(data, function(d){return(d.income)}).keys()
 
-   // Unbind data from the options
-    d3.select("#selectButton").selectAll('myOptions').remove(); 
    // add the options to the button
-    d3.select("#selectButton")
+    //d3.select("#selectButton")
+    //  .selectAll('myOptions')
+     //	.data(allGroup)
+      //.enter()
+    	//.append('option')
+      //.text(function (d) { return d; }) // text showed in the menu
+      //.attr("value", function (d) { return d; }) // corresponding value returned by the button
+
+	d3.select("#selectButton")
       .selectAll('myOptions')
      	.data(allGroup)
-      .enter()
+      .transition()
     	.append('option')
       .text(function (d) { return d; }) // text showed in the menu
       .attr("value", function (d) { return d; }) // corresponding value returned by the button
