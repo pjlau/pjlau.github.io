@@ -65,7 +65,7 @@ var svg = d3.select("#chart")
     .attr("height", height + margin.top + margin.bottom);
 
 // Create and append the select element
-const selectButton = svg.append("select").attr("id", "selectButton");
+svg.append("select").attr("id", "selectButton");
 
 // get the data
 d3.csv("data/adult.csv", function(data) {
