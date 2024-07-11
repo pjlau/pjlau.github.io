@@ -25,7 +25,7 @@
 
       var margin = {top: 200, right: 30, bottom: 30, left: 200},
     width = 800 - margin.left - margin.right,
-    height = 600 - margin.top - margin.bottom;
+    height = 500 - margin.top - margin.bottom;
 
 // append the svg object to the body of the page
 var svg = d3.select("#chart")
@@ -59,7 +59,7 @@ var color = ['lightgreen','lightcyan','lightblue','violet'];
 	// set the dimensions and margins of the graph
 var margin = {top: 200, right: 30, bottom: 30, left: 200},
     width = 800 - margin.left - margin.right,
-    height = 600 - margin.top - margin.bottom;
+    height = 500 - margin.top - margin.bottom;
 
 // append the svg object to the body of the page
 var svg = d3.select("#chart")
@@ -177,10 +177,11 @@ var pieGroup = svg.append("g")
 
     function populateSVG2() {
 
+	    d3.select("#chart").html(""); // Clear existing content
 	    	// set the dimensions and margins of the graph
 var margin = {top: 10, right: 30, bottom: 30, left: 40},
     width = 800 - margin.left - margin.right,
-    height = 600 - margin.top - margin.bottom;
+    height = 500 - margin.top - margin.bottom;
 
 // append the svg object to the body of the page
 var svg = d3.select("#chart")
