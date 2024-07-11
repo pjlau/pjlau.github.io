@@ -312,6 +312,8 @@ d3.csv("data/adult.csv", function(data) {
     const populateButton3 = document.getElementById("populateButton3");
     const populateButton4 = document.getElementById("populateButton4");
     
+    const clearOptions = document.getElementById("selectButton");
+    clearOptions.exit().remove();
 
     // Add click event listeners to buttons
     clearButton.addEventListener("click", clearSVG);
