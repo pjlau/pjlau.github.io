@@ -449,10 +449,11 @@ d3.csv("data/adult.csv", function(data) {
     const populateButton2 = document.getElementById("populateButton2");
     const populateButton3 = document.getElementById("populateButton3");
     //const populateButton4 = document.getElementById("populateButton4");
-    
+    const embedElement = document.getElementById("embed");
     // Add click event listener to the button
+    removeOptions(document.getElementById("selectButton"));
     clearButton.addEventListener("click", function() {
-       d3.select("#chart").html(""); // Clear existing content
+      d3.select("#chart").html(""); // Clear existing content
       // Toggle the visibility of the embed element
       embedElement.style.display = "block";
     });
