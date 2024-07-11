@@ -312,9 +312,6 @@ d3.csv("data/adult.csv", function(data) {
     const populateButton3 = document.getElementById("populateButton3");
     const populateButton4 = document.getElementById("populateButton4");
     
-    const selectButton = document.getElementById("selectButton");
-    // Option 1: Remove all options
-    selectButton.innerHTML = ""; // This replaces all child elements, including options
     // Add click event listeners to buttons
     clearButton.addEventListener("click", clearSVG);
     populateButton1.addEventListener("click", populateSVG1);
