@@ -7,6 +7,7 @@
 	
   <div id="chart"></div>
   <embed type="text/html" src="intro.html" width="800" height="600" id="embed" />
+  <button id="clearButton">Intro</button>
   <button id="populateButton1">Populate Chart1</button>
   <button id="populateButton2">Populate Chart2</button>
   <button id="populateButton3">Populate Chart3</button>
@@ -24,7 +25,9 @@
 		    selectElement.remove(i);
 	    }
     }
-    
+    function clearSVG(){
+	    d3.select("#chart").html(""); // Clear existing content
+    }
 
     // Function to repopulate the SVG with circles
     function populateSVG1() {
@@ -441,14 +444,17 @@ d3.csv("data/adult.csv", function(data) {
 	    
     }
     // Get button elements
-    //const clearButton = document.getElementById("clearButton");
+    const clearButton = document.getElementById("clearButton");
     const populateButton1 = document.getElementById("populateButton1");
     const populateButton2 = document.getElementById("populateButton2");
     const populateButton3 = document.getElementById("populateButton3");
     //const populateButton4 = document.getElementById("populateButton4");
     
-    // Add click event listeners to buttons
-    //clearButton.addEventListener("click", clearSVG);
+    // Add click event listener to the button
+    clearButton.addEventListener("click", function() {
+      // Toggle the visibility of the embed element
+      embedElement.style.display = (embedElement.style.display === "none") ? "block" : "none";
+    });
     populateButton1.addEventListener("click", populateSVG1);
     populateButton2.addEventListener("click", populateSVG2);
     populateButton3.addEventListener("click", populateSVG3);
