@@ -27,7 +27,6 @@
     // Function to clear the SVG content
     function clearSVG() {
       //removeOptions(document.getElementById("selectButton"));
-      document.getElementById("selectButton").remove();
       d3.select("#chart").html(""); // Clear existing content
 
       var margin = {top: 200, right: 30, bottom: 30, left: 200},
@@ -304,14 +303,14 @@ d3.csv("data/adult.csv", function(data) {
 	    
     }
     // Get button elements
-    const clearButton = document.getElementById("clearButton");
+    //const clearButton = document.getElementById("clearButton");
     const populateButton1 = document.getElementById("populateButton1");
     const populateButton2 = document.getElementById("populateButton2");
     const populateButton3 = document.getElementById("populateButton3");
-    const populateButton4 = document.getElementById("populateButton4");
+    //const populateButton4 = document.getElementById("populateButton4");
     
     // Add click event listeners to buttons
-    clearButton.addEventListener("click", clearSVG);
+    //clearButton.addEventListener("click", clearSVG);
     populateButton1.addEventListener("click", populateSVG1);
     populateButton2.addEventListener("click", populateSVG2);
     // Call populate function initially to create the chart
