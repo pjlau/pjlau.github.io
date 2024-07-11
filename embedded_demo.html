@@ -8,11 +8,13 @@
   <button id="populateButton2">Populate Chart2</button>
   <button id="populateButton3">Populate Chart3</button>
   <button id="populateButton4">Populate Chart4</button>
-  
+
+  <!-- Initialize a select button -->
+  <select id="selectButton"></select>
   <script src="https://d3js.org/d3.v5.min.js"></script>
   <script>
     // Define some data for the SVG elements
-    const data = [10, 20, 30, 40, 50];
+    //const data = [10, 20, 30, 40, 50];
 
     // Function to clear the SVG content
     function clearSVG() {
@@ -23,19 +25,137 @@
     function populateSVG1() {
       clearSVG();
 
-      const svg = d3.select("#chart");
+      //const svg = d3.select("#chart");
 
       // Enter selection for data binding
-      const circles = svg.selectAll("circle")
-        .data(data)
-        .enter();
+      //const circles = svg.selectAll("circle")
+      //  .data(data)
+      //  .enter();
 
       // Append circles for each data point
-      circles.append("circle")
-        .attr("cx", (d, i) => i * 50 + 20) // Set center x based on index
-        .attr("cy", 50) // Set center y
-        .attr("r", 20) // Set radius
-        .attr("fill", "blue"); // Set fill color
+      //circles.append("circle")
+        //.attr("cx", (d, i) => i * 50 + 20) // Set center x based on index
+        //.attr("cy", 50) // Set center y
+        //.attr("r", 20) // Set radius
+        //.attr("fill", "blue"); // Set fill color
+        
+//var color = ['pink','lightyellow','lightgreen','lightcyan','lightblue','violet'];
+var color = ['lightgreen','lightcyan','lightblue','violet'];
+	// set the dimensions and margins of the graph
+var margin = {top: 200, right: 30, bottom: 30, left: 200},
+    width = 500 - margin.left - margin.right,
+    height = 400 - margin.top - margin.bottom;
+
+// append the svg object to the body of the page
+var svg = d3.select("#chart")
+  .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom);
+  
+
+// get the data
+d3.csv("data/adult.csv", function(data) {
+
+  // List of groups (here I have one group per column)
+  var allGroup = d3.map(data, function(d){return(d.race)}).keys()
+  var incomeGroup = d3.map(data, function(d){return(d.income)}).keys()
+   // add the options to the button
+    d3.select("#selectButton")
+      .selectAll('myOptions')
+     	.data(allGroup)
+      .enter()
+    	.append('option')
+      .text(function (d) { return d; }) // text showed in the menu
+      .attr("value", function (d) { return d; }) // corresponding value returned by the button
+
+	
+  //var survival_count =  my_data.filter(function(m){if(m[data_class]==d && m.survived == 1){return m}}).length;
+  var data0_len = data.filter(function(d){if(d['income']===incomeGroup[0] && d['race']===allGroup[0]){return d}}).length;
+  var data1_len = data.filter(function(d){if(d['income']===incomeGroup[1] && d['race']===allGroup[0]){return d}}).length;
+  var data_len = data.filter(function(d){if(d['race']===allGroup[0]){return d}}).length;
+
+  var pie_viz = [data0_len/data_len, data1_len/data_len];
+	// Define margins and chart dimensions
+  var legend_text = ["<=50k",">50k"];
+  // Define the pie chart layout
+    var pie = d3.pie();
+
+    // Define the arc generator (adjusted for inner radius)
+    var arc = d3.arc()
+      .innerRadius(0)
+      .outerRadius(100);
+
+    // Create pie chart data based on input data
+    var pieData = pie(pie_viz);
+  
+  
+  //const g = svg.append("g")
+//.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+// Create a group element to hold pie chart slices
+var pieGroup = svg.append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+      .selectAll("path")
+      .data(pieData)
+      .enter()
+	.append("path")
+        .attr("d", arc)  // Use arc generator to define path
+        .attr("fill", function(d, i) { return color[i]; })  // Set color based on color array
+
+
+    // Insert text in svg
+	// svg.append('text').attr('x', 330).attr('y', 200).style('fill', 'steelblue').style('font-size', '24px').style('font-weight', 'bold').text('76%, <=50k');
+	
+	// svg.append('text').attr('x', 100).attr('y', 80).style('fill', 'steelblue').style('font-size', '24px').style('font-weight', 'bold').text('24%, >50k');
+
+	svg.append('text').attr('x', 320).attr('y', 200).style('fill', 'black').style('font-size', '24px').style('font-weight', 'bold').text('Green: <=50k');
+	svg.append('text').attr('x', 320).attr('y', 160).style('fill', 'black').style('font-size', '24px').style('font-weight', 'bold').text('Cyan: >50k');
+	
+// A function that update the chart
+    function update(selectedGroup) {
+
+      // Create new data with the selection?
+      //var dataFilter = data.filter(function(d){return d.race==selectedGroup})
+
+      var data0_len_u = data.filter(function(d){if(d['income']===incomeGroup[0] && d['race']==selectedGroup){return d}}).length;
+      //var data1_len_u = data.filter(function(d){if(d['income50k']==1 && d['race']==selectedGroup){return d}}).length;
+      var data_len_u =  data.filter(function(d){if(d['race']==selectedGroup){return d}}).length;
+      //var data1_len_u = data_len_u - data0_len_u;
+      var pie_viz_u = [data0_len_u/data_len_u, 1-data0_len_u/data_len_u];
+
+      // Define the pie chart layout
+      var pie_u = d3.pie();
+
+      // Define the arc generator (adjusted for inner radius)
+      var arc_u = d3.arc()
+      .innerRadius(0)
+      .outerRadius(100);
+	    
+      // Create pie chart data based on input data
+      var pieData_u = pie_u(pie_viz_u);
+
+      // Create a group element to hold pie chart slices
+      //var pieGroup_u = svg.append("g")
+      //.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+     
+    
+      // Bind data to pie chart slices and create paths
+     pieGroup
+      .data(pieData_u)
+      .transition()
+      .duration(1000)
+        .attr("d", arc_u)  // Use arc generator to define path
+        .attr("fill", function(d, i) { return color[i]; })  // Set color based on color array
+    }
+  
+   // When the button is changed, run the updateChart function
+    d3.select("#selectButton").on("change", function(d) {
+        // recover the option that has been chosen
+        var selectedOption = d3.select(this).property("value")
+        // run the updateChart function with this selected option
+        update(selectedOption)
+    })
+
     }
 
     // Get button elements
