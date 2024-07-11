@@ -34,7 +34,8 @@ var svg = d3.select("#chart")
 
     // Function to repopulate the SVG with circles
     function populateSVG1() {
-      clearSVG();
+      d3.select("#chart").html(""); // Clear existing content
+      //clearSVG();
 
       //const svg = d3.select("#chart");
 
@@ -62,7 +63,7 @@ var svg = d3.select("#chart")
   .append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom);
-  
+
 
 // get the data
 d3.csv("data/adult.csv", function(data) {
