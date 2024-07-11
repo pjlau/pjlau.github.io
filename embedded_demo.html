@@ -6,13 +6,12 @@
   <select id="selectButton"></select>
 	
   <div id="chart"></div>
-
-  <button id="intro">Intro</button>
+	
   <button id="populateButton1">Populate Chart1</button>
   <button id="populateButton2">Populate Chart2</button>
   <button id="populateButton3">Populate Chart3</button>
   
-
+  <embed type="text/html" src="intro.html" width="800" height="600" id="embed" />
  
 
   <script src="https://d3js.org/d3.v4.js"></script>
@@ -25,22 +24,7 @@
 		    selectElement.remove(i);
 	    }
     }
-    // Function to clear the SVG content
-    function clearSVG() {
-      //removeOptions(document.getElementById("selectButton"));
-      d3.select("#chart").html(""); // Clear existing content
-
-      var margin = {top: 200, right: 30, bottom: 30, left: 200},
-    width = 800 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
-
-// append the svg object to the body of the page
-var svg = d3.select("#chart")
-  .append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom);
-	    
-    }
+    
 
     // Function to repopulate the SVG with circles
     function populateSVG1() {
