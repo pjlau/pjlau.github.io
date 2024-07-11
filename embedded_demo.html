@@ -73,9 +73,9 @@ d3.csv("data/adult.csv", function(data) {
   // List of groups (here I have one group per column)
   var allGroup = d3.map(data, function(d){return(d.race)}).keys()
   var incomeGroup = d3.map(data, function(d){return(d.income)}).keys()
-
+   
    // Unbind data from the options
-    d3.select("#selectButton").selectAll('myOptions').data([]).exit().remove();
+   d3.selectAll("#selectButton").remove(); 
    // add the options to the button
     d3.select("#selectButton")
       .selectAll('myOptions')
@@ -202,7 +202,7 @@ d3.csv("data/adult.csv", function(data) {
   var allGroup = d3.map(data, function(d){return(d.income)}).keys()
 
    // Unbind data from the options
-    d3.select("#selectButton").selectAll('myOptions').data([]).exit().remove();
+    d3.selectAll("#selectButton").remove(); 
    // add the options to the button
     d3.select("#selectButton")
       .selectAll('myOptions')
