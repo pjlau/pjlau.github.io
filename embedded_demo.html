@@ -452,6 +452,7 @@ d3.csv("data/adult.csv", function(data) {
     
     // Add click event listener to the button
     clearButton.addEventListener("click", function() {
+       d3.select("#chart").html(""); // Clear existing content
       // Toggle the visibility of the embed element
       embedElement.style.display = "block";
     });
