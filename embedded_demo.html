@@ -75,7 +75,7 @@ d3.csv("data/adult.csv", function(data) {
   var incomeGroup = d3.map(data, function(d){return(d.income)}).keys()
    
    // Unbind data from the options
-   d3.select("#selectButton").selectAll('myOptions').data([]).exit().remove();
+   d3.select("#selectButton").exit().remove();
 	
    // add the options to the button
     d3.select("#selectButton")
