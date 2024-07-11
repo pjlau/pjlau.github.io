@@ -18,7 +18,12 @@
   <script>
     // Define some data for the SVG elements
     //const data = [10, 20, 30, 40, 50];
-
+    function removeOptions(selectElement){
+	    var L = selectElement.options.length - 1;
+	    for (i = L; i>=0 ; i--){
+		    selectElement.remove(i);
+	    }
+    }
     // Function to clear the SVG content
     function clearSVG() {
       d3.select("#chart").html(""); // Clear existing content
@@ -61,7 +66,7 @@ d3.csv("data/adult.csv", function(data) {
   var allGroup = d3.map(data, function(d){return(d.race)}).keys()
   var incomeGroup = d3.map(data, function(d){return(d.income)}).keys()
    
-	
+   removeOptions(document.getElementById("selectButton"));
    // add the options to the button
     var options = d3.select("#selectButton")
       .selectAll('myOptions')
@@ -188,6 +193,8 @@ d3.csv("data/adult.csv", function(data) {
   // List of groups (here I have one group per column)
   var allGroup = d3.map(data, function(d){return(d.income)}).keys()
    //options.exit().remove();
+
+   removeOptions(document.getElementById("selectButton"));
    // add the options to the button
     var options = d3.select("#selectButton")
        .selectAll('myOptions')
