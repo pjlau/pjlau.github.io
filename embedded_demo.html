@@ -17,6 +17,7 @@
 
   <script src="https://d3js.org/d3.v4.js"></script>
   <script>
+    const embedElement = document.getElementById("embed");
     // Define some data for the SVG elements
     //const data = [10, 20, 30, 40, 50];
     function removeOptions(selectElement){
@@ -31,6 +32,7 @@
 
     // Function to repopulate the SVG with circles
     function populateSVG1() {
+      embedElement.style.display = "none";
       d3.select("#chart").html(""); // Clear existing content
       //clearSVG();
 
@@ -160,7 +162,7 @@ var pieGroup = svg.append("g")
 
 
     function populateSVG2() {
-
+            embedElement.style.display = "none";
 	    d3.select("#chart").html(""); // Clear existing content
 	    	// set the dimensions and margins of the graph
 var margin = {top: 10, right: 30, bottom: 30, left: 40},
@@ -292,7 +294,7 @@ d3.csv("data/adult.csv", function(data) {
     }
 
     function populateSVG3() {
-
+             embedElement.style.display = "none";
 	     d3.select("#chart").html(""); // Clear existing content
 	    	// set the dimensions and margins of the graph
 var margin = {top: 10, right: 30, bottom: 30, left: 40},
@@ -449,10 +451,11 @@ d3.csv("data/adult.csv", function(data) {
     const populateButton2 = document.getElementById("populateButton2");
     const populateButton3 = document.getElementById("populateButton3");
     //const populateButton4 = document.getElementById("populateButton4");
-    const embedElement = document.getElementById("embed");
+    
     // Add click event listener to the button
-    removeOptions(document.getElementById("selectButton"));
+    
     clearButton.addEventListener("click", function() {
+      removeOptions(document.getElementById("selectButton"));
       d3.select("#chart").html(""); // Clear existing content
       // Toggle the visibility of the embed element
       embedElement.style.display = "block";
