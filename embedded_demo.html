@@ -10,7 +10,7 @@
   <button id="populateButton4">Populate Chart4</button>
 
   <!-- Initialize a select button -->
-  <select id="selectButton"></select>
+
   <script src="https://d3js.org/d3.v4.js"></script>
   <script>
     // Define some data for the SVG elements
@@ -64,6 +64,8 @@ var svg = d3.select("#chart")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom);
 
+// Create and append the select element
+const select = svg.append("select").attr("id", "selectButton");
 
 // get the data
 d3.csv("data/adult.csv", function(data) {
