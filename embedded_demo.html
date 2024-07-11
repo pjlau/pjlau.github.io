@@ -8,9 +8,9 @@
   <div id="chart"></div>
   <embed type="text/html" src="intro.html" width="800" height="500" id="embed" style="display: none;" />
   <button id="clearButton">Intro</button>
-  <button id="populateButton1">Populate Chart1</button>
-  <button id="populateButton2">Populate Chart2</button>
-  <button id="populateButton3">Populate Chart3</button>
+  <button id="populateButton1">Figure 1</button>
+  <button id="populateButton2">Figure 2</button>
+  <button id="populateButton3">Figure 3</button>
   
   
  
@@ -32,6 +32,8 @@
 
     // Function to repopulate the SVG with circles
     function populateSVG1() {
+      const selectButton = document.getElementById("selectButton");
+      selectButton.style.display = "block";
       embedElement.style.display = "none";
       d3.select("#chart").html(""); // Clear existing content
       //clearSVG();
@@ -162,6 +164,8 @@ var pieGroup = svg.append("g")
 
 
     function populateSVG2() {
+	    const selectButton = document.getElementById("selectButton");
+            selectButton.style.display = "block";
             embedElement.style.display = "none";
 	    d3.select("#chart").html(""); // Clear existing content
 	    	// set the dimensions and margins of the graph
@@ -294,6 +298,8 @@ d3.csv("data/adult.csv", function(data) {
     }
 
     function populateSVG3() {
+	     const selectButton = document.getElementById("selectButton");
+             selectButton.style.display = "block";
              embedElement.style.display = "none";
 	     d3.select("#chart").html(""); // Clear existing content
 	    	// set the dimensions and margins of the graph
