@@ -27,8 +27,7 @@
     // Function to clear the SVG content
     function clearSVG() {
       //removeOptions(document.getElementById("selectButton"));
-      var selectButton = document.getElementById("selectButton");
-      selectButton.exit().remove();
+      document.getElementById("selectButton").remove();
       d3.select("#chart").html(""); // Clear existing content
 
       var margin = {top: 200, right: 30, bottom: 30, left: 200},
