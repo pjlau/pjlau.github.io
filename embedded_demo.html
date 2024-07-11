@@ -10,6 +10,7 @@
   <button id="populateButton4">Populate Chart4</button>
 
   <!-- Initialize a select button -->
+  <select id="selectButton"></select>
 
   <script src="https://d3js.org/d3.v4.js"></script>
   <script>
@@ -64,8 +65,6 @@ var svg = d3.select("#chart")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom);
 
-// Create and append the select element
-svg.append("select").attr("id", "selectButton");
 
 // get the data
 d3.csv("data/adult.csv", function(data) {
@@ -74,7 +73,7 @@ d3.csv("data/adult.csv", function(data) {
   var allGroup = d3.map(data, function(d){return(d.race)}).keys()
   var incomeGroup = d3.map(data, function(d){return(d.income)}).keys()
    // add the options to the button
-    d3.select("selectButton")
+    d3.select("#selectButton")
       .selectAll('myOptions')
      	.data(allGroup)
       .enter()
@@ -163,7 +162,7 @@ var pieGroup = svg.append("g")
     }
   
    // When the button is changed, run the updateChart function
-    d3.select("selectButton").on("change", function(d) {
+    d3.select("#selectButton").on("change", function(d) {
         // recover the option that has been chosen
         var selectedOption = d3.select(this).property("value");
         // run the updateChart function with this selected option
