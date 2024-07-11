@@ -145,7 +145,7 @@ var pieGroup = svg.append("g")
       .transition()
       .duration(1000)
         .attr("d", arc_u)  // Use arc generator to define path
-        .attr("fill", function(d, i) { return color[i]; })  // Set color based on color array
+        .attr("fill", function(d, i) { return color[i]; });  // Set color based on color array
     }
   
    // When the button is changed, run the updateChart function
@@ -154,7 +154,7 @@ var pieGroup = svg.append("g")
         var selectedOption = d3.select(this).property("value")
         // run the updateChart function with this selected option
         update(selectedOption)
-    })
+    });
 
     }
 
