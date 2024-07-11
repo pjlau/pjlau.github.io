@@ -7,7 +7,7 @@
 <button id="intro"> Intro </button>
 <button id="test0"> Rich Poor Pie </button>
 <button id="test1"> Age Hist </button>
-<button id="test2"> Poverty vs Edu Level </button>
+<button id="test2"> Poverty vs Edu Year </button>
 
 <h2> Adult Income Dataset </h2>
   
@@ -17,6 +17,19 @@ It is widely used for predicting whether income exceeds $50K/yr based on census 
 
 The original dataset can be found in UCI Machine Learning Repository https://archive.ics.uci.edu/dataset/2/adult </h3>
 
+<h3> 
+Definition:
+Income: Annual Income
+Rich: Income > 50k, Poor: Income <=50k
+Poverty Rate = Poor Proportion of a Specific Demographic
+For example, Male Poverty Rate = Sampled Poor Male Population / Sampled Male Population
+
+Figure 1: Rich Poor Pie Chart by Race dropdown
+Figure 2: Age Histogram by Rich/Poor dropdown
+Figure 3: Poverty Rate across Races by number of educational years dropdown
+
+</h3>
+  
 <script>
 
   const intro = document.getElementById("intro");
