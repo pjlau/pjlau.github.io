@@ -40,7 +40,6 @@
 	</h3>
 	  
   </div>
-  <embed type="text/html" src="intro.html" width="800" height="500" id="embed" style="display: none;" />
   <button id="clearButton">Intro</button>
   <button id="populateButton1">Figure 1</button>
   <button id="populateButton2">Figure 2</button>
@@ -51,7 +50,7 @@
 
   <script src="https://d3js.org/d3.v4.js"></script>
   <script>
-    const embedElement = document.getElementById("embed");
+    
     const introviz = document.getElementById("introviz");
     introviz.style.display = "none"; 
     // Define some data for the SVG elements
@@ -70,7 +69,6 @@
     function populateSVG1() {
       const selectButton = document.getElementById("selectButton");
       selectButton.style.display = "block";
-      embedElement.style.display = "none";
       d3.select("#chart").html(""); // Clear existing content
       //clearSVG();
 
@@ -202,7 +200,7 @@ var pieGroup = svg.append("g")
     function populateSVG2() {
 	    const selectButton = document.getElementById("selectButton");
             selectButton.style.display = "block";
-            embedElement.style.display = "none";
+            
 	    d3.select("#chart").html(""); // Clear existing content
 	    	// set the dimensions and margins of the graph
 var margin = {top: 10, right: 30, bottom: 30, left: 40},
@@ -337,7 +335,7 @@ d3.csv("data/adult.csv", function(data) {
     function populateSVG3() {
 	     const selectButton = document.getElementById("selectButton");
              selectButton.style.display = "block";
-             embedElement.style.display = "none";
+             
 	     d3.select("#chart").html(""); // Clear existing content
 	    	// set the dimensions and margins of the graph
 var margin = {top: 10, right: 30, bottom: 30, left: 40},
@@ -505,7 +503,6 @@ d3.csv("data/adult.csv", function(data) {
       removeOptions(selectButton);
       d3.select("#chart").html(""); // Clear existing content
       // Toggle the visibility of the embed element
-      //embedElement.style.display = "block";
       introviz.style.display = "block";
     });
     populateButton1.addEventListener("click", populateSVG1);
