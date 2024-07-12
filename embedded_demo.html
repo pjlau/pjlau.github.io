@@ -546,6 +546,7 @@ d3.csv("data/adult.csv", function(data) {
       removeOptions(selectButton);
       d3.select("#chart").html(""); // Clear existing content
       // Toggle the visibility of the embed element
+      introviz.style.display = "none";
       outroviz.style.display = "block";
     });
     // Call populate function initially to create the chart
