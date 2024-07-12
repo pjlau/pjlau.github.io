@@ -69,6 +69,7 @@
     function populateSVG1() {
       const selectButton = document.getElementById("selectButton");
       selectButton.style.display = "block";
+      introviz.style.display = "none";
       d3.select("#chart").html(""); // Clear existing content
       //clearSVG();
 
@@ -200,6 +201,7 @@ var pieGroup = svg.append("g")
     function populateSVG2() {
 	    const selectButton = document.getElementById("selectButton");
             selectButton.style.display = "block";
+	    introviz.style.display = "none";
             
 	    d3.select("#chart").html(""); // Clear existing content
 	    	// set the dimensions and margins of the graph
@@ -335,6 +337,7 @@ d3.csv("data/adult.csv", function(data) {
     function populateSVG3() {
 	     const selectButton = document.getElementById("selectButton");
              selectButton.style.display = "block";
+	     introviz.style.display = "none";
              
 	     d3.select("#chart").html(""); // Clear existing content
 	    	// set the dimensions and margins of the graph
