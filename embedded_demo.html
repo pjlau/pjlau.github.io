@@ -52,7 +52,7 @@
   <script>
     
     const introviz = document.getElementById("introviz");
-    introviz.style.display = "none"; 
+    
     // Define some data for the SVG elements
     //const data = [10, 20, 30, 40, 50];
     function removeOptions(selectElement){
@@ -512,7 +512,9 @@ d3.csv("data/adult.csv", function(data) {
     populateButton2.addEventListener("click", populateSVG2);
     populateButton3.addEventListener("click", populateSVG3);
     // Call populate function initially to create the chart
-    populateSVG1();
+    //populateSVG1();
+    d3.select("#chart").html("");
+    //introviz.style.display = "block";
   </script>
 </body>
 </html>
