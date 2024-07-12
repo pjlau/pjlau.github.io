@@ -513,6 +513,8 @@ d3.csv("data/adult.csv", function(data) {
     populateButton3.addEventListener("click", populateSVG3);
     // Call populate function initially to create the chart
     //populateSVG1();
+    const selectButton = document.getElementById("selectButton");
+    selectButton.style.display = "none";
     d3.select("#chart").html("");
     //introviz.style.display = "block";
   </script>
