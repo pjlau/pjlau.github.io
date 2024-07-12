@@ -40,11 +40,36 @@
 	</h3>
 	  
   </div>
+   <div id="outroviz">
+	<h2> Adult Income Dataset </h2>
+	
+	<h3> In this narrative visalization, we have explore pie charts, histograms and bar plots.
+	<br>
+	In this dataset, samples with income below 50k are the majority regardless of background.
+	<br>
+	Pie charts and bar plots show race and level of education can play a significant role in income.
+	<br>
+	<br>
+	Age Histograms show that people between 40 and 50 may have the strongest economic power. 
+	<br>
+	<br>
+	Other factors such as gender and relationship also have significant influence on income.
+	<br>
+	<br>
+	Male individuals are more inclined to be wealthier than female counterparts.
+	<br>
+	<br>
+	Married husbands tend to be wealthier than unmarried counterparts.
+	<br>
+	<br>
+	The author appreciates the staff support and opportunity to learn d3.js offered by CS 416.
+	</h3>
+  </div>
   <button id="clearButton">Intro</button>
   <button id="populateButton1">Figure 1</button>
   <button id="populateButton2">Figure 2</button>
   <button id="populateButton3">Figure 3</button>
-  
+  <button id="clearButton2">Outro</button>
   
  
 
@@ -52,7 +77,8 @@
   <script>
     
     const introviz = document.getElementById("introviz");
-    
+    const outroviz = document.getElementById("outroviz");
+    //outroviz.style.display = "none";
     // Define some data for the SVG elements
     //const data = [10, 20, 30, 40, 50];
     function removeOptions(selectElement){
@@ -70,6 +96,7 @@
       const selectButton = document.getElementById("selectButton");
       selectButton.style.display = "block";
       introviz.style.display = "none";
+      outroviz.style.display = "none";
       d3.select("#chart").html(""); // Clear existing content
       //clearSVG();
 
@@ -202,7 +229,7 @@ var pieGroup = svg.append("g")
 	    const selectButton = document.getElementById("selectButton");
             selectButton.style.display = "block";
 	    introviz.style.display = "none";
-            
+            outroviz.style.display = "none";
 	    d3.select("#chart").html(""); // Clear existing content
 	    	// set the dimensions and margins of the graph
 var margin = {top: 10, right: 30, bottom: 30, left: 40},
@@ -338,7 +365,7 @@ d3.csv("data/adult.csv", function(data) {
 	     const selectButton = document.getElementById("selectButton");
              selectButton.style.display = "block";
 	     introviz.style.display = "none";
-             
+             outroviz.style.display = "none";
 	     d3.select("#chart").html(""); // Clear existing content
 	    	// set the dimensions and margins of the graph
 var margin = {top: 10, right: 30, bottom: 30, left: 40},
@@ -496,6 +523,7 @@ d3.csv("data/adult.csv", function(data) {
     const populateButton1 = document.getElementById("populateButton1");
     const populateButton2 = document.getElementById("populateButton2");
     const populateButton3 = document.getElementById("populateButton3");
+    const clearButton2 = document.getElementById("clearButton2");
     //const populateButton4 = document.getElementById("populateButton4");
     
     // Add click event listener to the button
@@ -506,15 +534,25 @@ d3.csv("data/adult.csv", function(data) {
       removeOptions(selectButton);
       d3.select("#chart").html(""); // Clear existing content
       // Toggle the visibility of the embed element
+      outroviz.style.display = "none";
       introviz.style.display = "block";
     });
     populateButton1.addEventListener("click", populateSVG1);
     populateButton2.addEventListener("click", populateSVG2);
     populateButton3.addEventListener("click", populateSVG3);
+    clearButton2.addEventListener("click", function() {
+      const selectButton = document.getElementById("selectButton");
+      selectButton.style.display = "none";
+      removeOptions(selectButton);
+      d3.select("#chart").html(""); // Clear existing content
+      // Toggle the visibility of the embed element
+      outroviz.style.display = "block";
+    });
     // Call populate function initially to create the chart
     //populateSVG1();
     const selectButton = document.getElementById("selectButton");
     selectButton.style.display = "none";
+    outroviz.style.display = "none";
     d3.select("#chart").html("");
     //introviz.style.display = "block";
   </script>
