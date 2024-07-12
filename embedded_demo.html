@@ -52,6 +52,8 @@
   <script src="https://d3js.org/d3.v4.js"></script>
   <script>
     const embedElement = document.getElementById("embed");
+    const introviz = document.getElementById("introviz");
+    introviz.style.display = "none"; 
     // Define some data for the SVG elements
     //const data = [10, 20, 30, 40, 50];
     function removeOptions(selectElement){
@@ -503,7 +505,8 @@ d3.csv("data/adult.csv", function(data) {
       removeOptions(selectButton);
       d3.select("#chart").html(""); // Clear existing content
       // Toggle the visibility of the embed element
-      embedElement.style.display = "block";
+      //embedElement.style.display = "block";
+      introviz.style.display = "block";
     });
     populateButton1.addEventListener("click", populateSVG1);
     populateButton2.addEventListener("click", populateSVG2);
