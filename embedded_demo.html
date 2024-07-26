@@ -361,7 +361,8 @@ d3.csv("data/adult.csv", function(data) {
     });
    
 });
-
+        svg.append('text').attr('x', 50).attr('y', 450).style('fill', 'black').style('font-size', '24px').style('font-weight', 'bold').text('Figure 2: Age Histogram by Rich/Poor dropdown');
+	
 	//svg.append('text').attr('x', 320).attr('y', 200).style('fill', 'black').style('font-size', '24px').style('font-weight', 'bold').text('x: Age');
 	//svg.append('text').attr('x', 320).attr('y', 160).style('fill', 'black').style('font-size', '24px').style('font-weight', 'bold').text('y: Count');
     }
@@ -373,7 +374,7 @@ d3.csv("data/adult.csv", function(data) {
              outroviz.style.display = "none";
 	     d3.select("#chart").html(""); // Clear existing content
 	    	// set the dimensions and margins of the graph
-var margin = {top: 100, right: 50, bottom: 100, left: 50},
+var margin = {top: 20, right: 50, bottom: 100, left: 50},
     width = 800 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
 
