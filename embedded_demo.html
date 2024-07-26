@@ -250,6 +250,10 @@ var svg = d3.select("#chart")
     .attr("transform",
           "translate(" + margin.left + "," + margin.top + ")");
 
+svg.append('text').attr('x', 50).attr('y', 450).style('fill', 'black').style('font-size', '24px').style('font-weight', 'bold').text('Figure 2: Age Histogram by Rich/Poor dropdown');
+	
+
+	    
 // get the data
 d3.csv("data/adult.csv", function(data) {
 
@@ -361,8 +365,6 @@ d3.csv("data/adult.csv", function(data) {
     });
    
 });
-        g.append('text').attr('x', 50).attr('y', 450).style('fill', 'black').style('font-size', '24px').style('font-weight', 'bold').text('Figure 2: Age Histogram by Rich/Poor dropdown');
-	
 	//svg.append('text').attr('x', 320).attr('y', 200).style('fill', 'black').style('font-size', '24px').style('font-weight', 'bold').text('x: Age');
 	//svg.append('text').attr('x', 320).attr('y', 160).style('fill', 'black').style('font-size', '24px').style('font-weight', 'bold').text('y: Count');
     }
