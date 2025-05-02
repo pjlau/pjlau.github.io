@@ -9,6 +9,8 @@ The original dataset can be found in UCI Machine Learning Repository
 https://archive.ics.uci.edu/dataset/2/adult
 <br>
 The interactive data visualization can be viewed on https://pjlau.github.io/data_viz.html
+<br>
+If the website is not working, it means the workflow in this repository expires.
 ## Visualization
 <img src="images/demo_fig1.png" alt="Example1" width="400">
 <br>
