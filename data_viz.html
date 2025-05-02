@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <style> rect {fill: lightblue; stroke: black; }</style>
+   <!-- Initialize a select button -->
+  <select id="selectButton"></select>
+	
+  <div id="chart"></div>
+  <div id="introviz">
+	<h2> Adult Income Dataset </h2>
+	
+	<h3> This dataset was extracted by Barry Becker from the 1994 Census database.
+	<br>
+	It is widely used for predicting whether annual income exceeds $50K/yr based on census data.
+	<br>
+	The original dataset can be found in UCI Machine Learning Repository
+	<br>
+	https://archive.ics.uci.edu/dataset/2/adult
+	<br>
+	<br>
+	Rich: Income > 50k, Poor: Income <=50k
+	<br>
+	<br>
+	Poverty Rate = Sampled Poor Population / Sampled Population
+	<br>
+	<br>
+	Figure 1: Rich Poor Pie Chart by Race dropdown
+	<br>
+	<br>
+	Figure 2: Age Histogram by Rich/Poor dropdown
+	<br>
+	<br>
+	Figure 3: Poverty Rate across Races by number of educational years dropdown
+	<br>
+	<br>
+	Figure 4: Rich Poor Pie Chart by Gender dropdown
+	<br>
+	<br>
+	Figure 5: Rich Poor Pie Chart by Relationship dropdown
+	</h3>
+	  
+  </div>
+   <div id="outroviz">
+	<h2> Adult Income Dataset </h2>
+	
+	<h3> In this narrative visalization, we have explored pie charts, histograms and bar plots.
+	<br>
+	In this dataset, samples with income below 50k are the majority regardless of background.
+	<br>
+	Pie charts and bar plots show race and level of education can play a significant role in income.
+	<br>
+	<br>
+	Age Histograms show that people between 40 and 50 may have the strongest economic power. 
+	<br>
+	<br>
+	Other factors such as gender and relationship also have significant influence on income.
+	<br>
+	<br>
+	Male individuals are more inclined to be wealthier than female counterparts.
+	<br>
+	<br>
+	Married husbands tend to be wealthier than unmarried counterparts.
+	<br>
+	<br>
+	The author appreciates the staff support and opportunity to learn d3.js offered by CS 416.
+	</h3>
+  </div>
+  <button id="clearButton">Intro</button>
+  <button id="populateButton1">Figure 1</button>
+  <button id="populateButton2">Figure 2</button>
+  <button id="populateButton3">Figure 3</button>
+  <button id="populateButton4">Figure 4</button>
+  <button id="populateButton5">Figure 5</button>
+  <button id="clearButton2">Outro</button>
+  
+ 
+
+  <script src="https://d3js.org/d3.v4.js"></script>
+  <script>
+    
+    const introviz = document.getElementById("introviz");
+    const outroviz = document.getElementById("outroviz");
+    //outroviz.style.display = "none";
+    // Define some data for the SVG elements
+    //const data = [10, 20, 30, 40, 50];
+    function removeOptions(selectElement){
+	    var L = selectElement.options.length - 1;
+	    for (i = L; i>=0 ; i--){
+		    selectElement.remove(i);
+	    }
+    }
+    function clearSVG(){
+	    d3.select("#chart").html(""); // Clear existing content
+    }
+
+    // Function to repopulate the SVG with circles
+    function populateSVG1() {
+      const selectButton = document.getElementById("selectButton");
+      selectButton.style.display = "block";
+      introviz.style.display = "none";
+      outroviz.style.display = "none";
+      d3.select("#chart").html(""); // Clear existing content
+      //clearSVG();
+
+        
+//var color = ['pink','lightyellow','lightgreen','lightcyan','lightblue','violet'];
+var color = ['lightgreen','lightcyan','lightblue','violet'];
+	// set the dimensions and margins of the graph
+var margin = {top: 200, right: 30, bottom: 30, left: 200},
+    width = 800 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
+
+// append the svg object to the body of the page
+var svg = d3.select("#chart")
+  .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom);
+	    
+// get the data
+d3.csv("data/adult.csv", function(data) {
+
+  // List of groups (here I have one group per column)
+  var allGroup = d3.map(data, function(d){return(d.race)}).keys()
+  var incomeGroup = d3.map(data, function(d){return(d.income)}).keys()
+   
+   removeOptions(document.getElementById("selectButton"));
+   // add the options to the button
+    var options = d3.select("#selectButton")
+      .selectAll('myOptions')
+     	.data(allGroup);
+	
+      options.enter()
+    	.append('option')
+      .text(function (d) { return d; }) // text showed in the menu
+      .attr("value", function (d) { return d; }) // corresponding value returned by the button
+
+	
+  //var survival_count =  my_data.filter(function(m){if(m[data_class]==d && m.survived == 1){return m}}).length;
+  var data0_len = data.filter(function(d){if(d['income']===incomeGroup[0] && d['race']===allGroup[0]){return d}}).length;
+  var data1_len = data.filter(function(d){if(d['income']===incomeGroup[1] && d['race']===allGroup[0]){return d}}).length;
+  var data_len = data.filter(function(d){if(d['race']===allGroup[0]){return d}}).length;
+
+  var pie_viz = [data0_len/data_len, data1_len/data_len];
+	// Define margins and chart dimensions
+  var legend_text = ["<=50k",">50k"];
+  // Define the pie chart layout
+    var pie = d3.pie();
+
+    // Define the arc generator (adjusted for inner radius)
+    var arc = d3.arc()
+      .innerRadius(0)
+      .outerRadius(100);
+
+    // Create pie chart data based on input data
+    var pieData = pie(pie_viz);
+  
+  
+  //const g = svg.append("g")
+//.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+// Create a group element to hold pie chart slices
+var pieGroup = svg.append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+      .selectAll("path")
+      .data(pieData)
+      .enter()
+	.append("path")
+        .attr("d", arc)  // Use arc generator to define path
+        .attr("fill", function(d, i) { return color[i]; })  // Set color based on color array
+
+
+    // Insert text in svg
+	// svg.append('text').attr('x', 330).attr('y', 200).style('fill', 'steelblue').style('font-size', '24px').style('font-weight', 'bold').text('76%, <=50k');
+	
+	// svg.append('text').attr('x', 100).attr('y', 80).style('fill', 'steelblue').style('font-size', '24px').style('font-weight', 'bold').text('24%, >50k');
+
+	svg.append('text').attr('x', 320).attr('y', 200).style('fill', 'black').style('font-size', '24px').style('font-weight', 'bold').text('Green: <=50k');
+	svg.append('text').attr('x', 320).attr('y', 160).style('fill', 'black').style('font-size', '24px').style('font-weight', 'bold').text('Cyan: >50k');
+
+	svg.append('text').attr('x', 50).attr('y', 450).style('fill', 'black').style('font-size', '24px').style('font-weight', 'bold').text('Figure 1: Rich Poor Pie Chart by Race dropdown');
+	
+	
+// A function that update the chart
+    function update(selectedGroup) {
+
+      // Create new data with the selection?
+      //var dataFilter = data.filter(function(d){return d.race==selectedGroup})
+
+      var data0_len_u = data.filter(function(d){if(d['income']===incomeGroup[0] && d['race']==selectedGroup){return d}}).length;
+      //var data1_len_u = data.filter(function(d){if(d['income50k']==1 && d['race']==selectedGroup){return d}}).length;
+      var data_len_u =  data.filter(function(d){if(d['race']==selectedGroup){return d}}).length;
+      //var data1_len_u = data_len_u - data0_len_u;
+      var pie_viz_u = [data0_len_u/data_len_u, 1-data0_len_u/data_len_u];
+
+      // Define the pie chart layout
+      var pie_u = d3.pie();
+
+      // Define the arc generator (adjusted for inner radius)
+      var arc_u = d3.arc()
+      .innerRadius(0)
+      .outerRadius(100);
+	    
+      // Create pie chart data based on input data
+      var pieData_u = pie_u(pie_viz_u);
+
+      // Create a group element to hold pie chart slices
+      //var pieGroup_u = svg.append("g")
+      //.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+     
+    
+      // Bind data to pie chart slices and create paths
+     pieGroup
+      .data(pieData_u)
+      .transition()
+      .duration(1000)
+        .attr("d", arc_u)  // Use arc generator to define path
+        .attr("fill", function(d, i) { return color[i]; });  // Set color based on color array
+    }
+  
+   // When the button is changed, run the updateChart function
+    d3.select("#selectButton").on("change", function(d) {
+        // recover the option that has been chosen
+        var selectedOption = d3.select(this).property("value");
+        // run the updateChart function with this selected option
+        update(selectedOption);
+    });
+
+    });
+
+    }
+
+
+    function populateSVG2() {
+	    const selectButton = document.getElementById("selectButton");
+            selectButton.style.display = "block";
+	    introviz.style.display = "none";
+            outroviz.style.display = "none";
+	    d3.select("#chart").html(""); // Clear existing content
+	    	// set the dimensions and margins of the graph
+var margin = {top: 100, right: 50, bottom: 100, left: 50},
+    width = 800 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
+
+// append the svg object to the body of the page
+var svg = d3.select("#chart")
+  .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform",
+          "translate(" + margin.left + "," + margin.top + ")");
+
+svg.append('text').attr('x', 50).attr('y', 450).style('fill', 'black').style('font-size', '24px').style('font-weight', 'bold').text('Figure 2: Age Histogram by Rich/Poor dropdown');
+	
+
+	    
+// get the data
+d3.csv("data/adult.csv", function(data) {
+
+  // List of groups (here I have one group per column)
+  var allGroup = d3.map(data, function(d){return(d.income)}).keys()
+   //options.exit().remove();
+
+   removeOptions(document.getElementById("selectButton"));
+   // add the options to the button
+    var options = d3.select("#selectButton")
+       .selectAll('myOptions')
+     	 .data(allGroup);
+	
+      options.enter()
+    	.append('option')
+      .text(function (d) { return d; }) // text showed in the menu
+      .attr("value", function (d) { return d; }) // corresponding value returned by the button
+
+	
+	
+  //var survival_count =  my_data.filter(function(m){if(m[data_class]==d && m.survived == 1){return m}}).length;
+  var data0 = data.filter(function(d){if(d['income']===allGroup[0]){return d}});
+  
+
+  // X axis: scale and draw:
+  var x = d3.scaleLinear()
+      .domain([0, 100])     // can use this instead of 1000 to have the max of data: d3.max(data, function(d) { return +d.price })
+      .range([0, width]);
+  svg.append("g")
+      .attr("transform", "translate(0," + height + ")")
+      .call(d3.axisBottom(x));
+
+  // set the parameters for the histogram
+  var histogram = d3.histogram()
+      .value(function(d) {if(d['income']===allGroup[0]){ return d.age;} })   // I need to give the vector of value
+      .domain(x.domain())  // then the domain of the graphic
+      .thresholds(x.ticks(10)); // then the numbers of bins
+
+  // And apply this function to data to get the bins
+  var bins = histogram(data0);
+
+  // Y axis: scale and draw:
+  var y = d3.scaleLinear()
+      .range([height, 0]);
+      y.domain([0, d3.max(bins, function(d) { return d.length; })]);   // d3.hist has to be called before the Y axis obviously
+  svg.append("g")
+      .call(d3.axisLeft(y));
+
+  // append the bar rectangles to the svg element
+  var hist_plot = svg.selectAll("rect")
+      .data(bins)
+      .enter()
+      .append("rect")
+        .attr("x", 1)
+        .attr("transform", function(d) { return "translate(" + x(d.x0) + "," + y(d.length) + ")"; })
+        .attr("width", function(d) { return x(d.x1) - x(d.x0) -1 ; })
+        .attr("height", function(d) { return height - y(d.length); })
+        .style("fill", "#69b3a2");
+
+   // A function that update the chart
+    function update(selectedGroup) {
+
+      // Create new data with the selection?
+      var dataFilter = data.filter(function(d){return d['income']==selectedGroup});
+
+      // X axis: scale and draw:
+      //var x = d3.scaleLinear()
+      //.domain([0, 100])     // can use this instead of 1000 to have the max of data: d3.max(data, function(d) { return +d.price })
+      //.range([0, width]);
+  //svg.append("g")
+      //.attr("transform", "translate(0," + height + ")")
+      //.call(d3.axisBottom(x));
+      
+      // set the parameters for the histogram
+      var histogram_u = d3.histogram()
+      .value(function(d) {if(d['income']==selectedGroup){ return d.age;} })   // I need to give the vector of value
+      .domain(x.domain())  // then the domain of the graphic
+      .thresholds(x.ticks(10)); // then the numbers of bins
+
+     // And apply this function to data to get the bins
+      var bins_u = histogram_u(dataFilter);
+
+     // Y axis: scale and draw:
+      //var y = d3.scaleLinear()
+      //.range([height, 0]);
+      //y.domain([0, d3.max(bins_u, function(d) { return d.length; })]);   // d3.hist has to be called before the Y axis obviously
+       //svg.append("g")
+      //.call(d3.axisLeft(y));
+
+	    
+      // Give these new data to update line
+      hist_plot
+          .data(bins_u)
+          .transition()
+          .duration(1000)
+          .attr("x", 1)
+        .attr("transform", function(d) { return "translate(" + x(d.x0) + "," + y(d.length) + ")"; })
+        .attr("width", function(d) { return x(d.x1) - x(d.x0) -1 ; })
+        .attr("height", function(d) { return height - y(d.length); })
+        .style("fill", "#69b3a2");
+    }
+
+    // When the button is changed, run the updateChart function
+    d3.select("#selectButton").on("change", function(d) {
+        // recover the option that has been chosen
+        var selectedOption = d3.select(this).property("value");
+        // run the updateChart function with this selected option
+        update(selectedOption);
+    });
+   
+});
+	//svg.append('text').attr('x', 320).attr('y', 200).style('fill', 'black').style('font-size', '24px').style('font-weight', 'bold').text('x: Age');
+	//svg.append('text').attr('x', 320).attr('y', 160).style('fill', 'black').style('font-size', '24px').style('font-weight', 'bold').text('y: Count');
+    }
+
+    function populateSVG3() {
+	     const selectButton = document.getElementById("selectButton");
+             selectButton.style.display = "block";
+	     introviz.style.display = "none";
+             outroviz.style.display = "none";
+	     d3.select("#chart").html(""); // Clear existing content
+	    	// set the dimensions and margins of the graph
+var margin = {top: 20, right: 50, bottom: 100, left: 50},
+    width = 800 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
+
+// append the svg object to the body of the page
+var svg = d3.select("#chart")
+  .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform",
+          "translate(" + margin.left + "," + margin.top + ")");
+
+	    // get the data
+d3.csv("data/adult.csv", function(data) {
+
+  function compareNumbers(a, b) {
+  	return a - b;
+  }
+  var incomeGroup = d3.map(data, function(d){return(d.income)}).keys();
+  var raceGroup = d3.map(data, function(d){return(d.race)}).keys();
+  var eduGroup = d3.map(data, function(d){return(d['educational-num'])}).keys().map(Number).sort(compareNumbers);
+  //svg.append('text').attr('x', 320).attr('y', 160).style('fill', 'black').style('font-size', '24px').style('font-weight', 'bold').text(String(raceGroup.length));
+  //svg.append('text').attr('x', 320).attr('y', 200).style('fill', 'black').style('font-size', '24px').style('font-weight', 'bold').text('1234');
+  var data_poor_race = new Array(raceGroup.length);
+  var data_race = new Array(raceGroup.length);
+  var bar_viz = new Array(raceGroup.length);
+
+  removeOptions(document.getElementById("selectButton"));
+  d3.select("#selectButton")
+      .selectAll('myOptions')
+     	.data(eduGroup)
+      .enter()
+    	.append('option')
+      .text(function (d) { return d; }) // text showed in the menu
+      .attr("value", function (d) { return d; }) // corresponding value returned by the button
+	
+  for (let i = 0; i < raceGroup.length; i++) {
+  	//text += cars[i] + "<br>";
+	data_poor_race[i] = data.filter(function(d){if(d['income']===incomeGroup[0] && d['race']===raceGroup[i] && d['educational-num']==1){return d}}).length;
+        data_race[i] = data.filter(function(d){if(d['race']===raceGroup[i] && d['educational-num']==1){return d}}).length;
+	if (data_race[i] == 0){
+	    bar_viz[i] = 0;
+	}
+	else{
+	    bar_viz[i] = data_poor_race[i]/data_race[i];
+        }
+  }
+  //var survival_count =  my_data.filter(function(m){if(m[data_class]==d && m.survived == 1){return m}}).length;
+  
+  //var data1_poor_len = data.filter(function(d){if(d['income50k']==0 && d['age']>=20 && d['age']<30 && d['educational-num']<=9 && d['gender']=="Female" && d['relationship']=="Unmarried"){return d}}).length;
+  
+  //var data0_len = data.filter(function(d){if(d['age']>=40 && d['age']<50 && d['educational-num']>=15 && d['gender']=="Male" && d['relationship']=="Husband"){return d}}).length;
+  //var data1_len = data.filter(function(d){if(d['age']>=20 && d['age']<30 && d['educational-num']<=9 && d['gender']=="Female" && d['relationship']=="Unmarried"){return d}}).length;
+	
+  //var bar_viz = [data0_poor_len/data0_len, data1_poor_len/data1_len];
+	// Define margins and chart dimensions
+  
+  const dmax = d3.max(bar_viz);
+
+  // Create SVG element
+  //const svg = d3.select("#my_dataviz").append("svg");
+  // append the svg object to the body of the page
+  
+  
+  const g = svg.append("g")
+.attr("transform", "translate(" + margin.left + "," + margin.top + ")");  
+  const xdom = Array(raceGroup.length).fill(0).map((e,i)=>e+(i*1));
+  // Define x-axis scale
+  const xScale = d3.scaleBand()
+    .domain(xdom)
+    .range([0, width])
+    .padding(0.2);
+  const yScale = d3.scaleLinear()
+    .domain([0, 1])
+    .range([height,0]);
+
+  const xAxis = d3.axisBottom(xScale).ticks(raceGroup.length).tickFormat(function(d,i){return raceGroup[i];});
+  const yAxis = d3.axisLeft(yScale);
+
+  // Create bars based on data
+  g.selectAll("rect")
+    .data(bar_viz)
+    .enter()
+    .append("rect")
+    .attr("x", (d, i) => xScale(i))  
+    .attr("y", d => height - height*d/dmax)  // Position bars from top (y-axis)
+    .attr("width", xScale.bandwidth())  // Set width using scale's bandwidth
+    .attr("height", d => height*d/dmax);  // Set height based on data value
+
+   svg.append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+      .call(yAxis); 
+    const xheight = height + margin.top;
+    
+   svg.append("g")
+     .attr("transform", "translate(" + margin.left + "," + xheight + ")")
+      .call(xAxis);
+
+   // A function that update the chart
+    function update(selectedGroup) {
+	    
+      //var data_poor_race_u = new Array(raceGroup.length);
+      //var data_race_u = new Array(raceGroup.length);
+      //var bar_viz_u = new Array(raceGroup.length);
+      // Create new data with the selection?
+      //var dataFilter = data.filter(function(d){return d.race==selectedGroup})
+      for (let i = 0; i < raceGroup.length; i++) {
+  	//text += cars[i] + "<br>";
+	data_poor_race[i] = data.filter(function(d){if(d['income']===incomeGroup[0] && d['race']===raceGroup[i] && d['educational-num']==selectedGroup){return d}}).length;
+        data_race[i] = data.filter(function(d){if(d['race']===raceGroup[i] && d['educational-num']==selectedGroup){return d}}).length;
+	if (data_race[i] == 0){
+	    bar_viz[i] = 0;
+	}
+	else{
+	    bar_viz[i] = data_poor_race[i]/data_race[i];
+        }
+	
+      }
+	    
+      const dmax = d3.max(bar_viz);
+
+      // Create bars based on data
+      g.selectAll("rect")
+    .data(bar_viz)
+    .transition()
+    .duration(1000)
+    .attr("x", (d, i) => xScale(i))  
+    .attr("y", d => height - height*d/dmax)  // Position bars from top (y-axis)
+    .attr("width", xScale.bandwidth())  // Set width using scale's bandwidth
+    .attr("height", d => height*d/dmax);  // Set height based on data value
+      // Create a group element to hold pie chart slices
+      //var pieGroup_u = svg.append("g")
+      //.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    
+    }
+  
+   // When the button is changed, run the updateChart function
+    d3.select("#selectButton").on("change", function(d) {
+        // recover the option that has been chosen
+        var selectedOption = d3.select(this).property("value");
+        // run the updateChart function with this selected option
+        update(selectedOption);
+    });
+});
+    //svg.append('text').attr('x', 320).attr('y', 200).style('fill', 'black').style('font-size', '24px').style('font-weight', 'bold').text('x: Race');
+    //svg.append('text').attr('x', 320).attr('y', 160).style('fill', 'black').style('font-size', '24px').style('font-weight', 'bold').text('y: Poverty Rate (0~1)');
+    svg.append('text').attr('x', 50).attr('y', 450).style('fill', 'black').style('font-size', '24px').style('font-weight', 'bold').text('Figure 3: Poverty Rate across Races by number of educational years dropdown');
+		    
+    }
+
+    // Function to repopulate the SVG with circles
+    function populateSVG4() {
+      const selectButton = document.getElementById("selectButton");
+      selectButton.style.display = "block";
+      introviz.style.display = "none";
+      outroviz.style.display = "none";
+      d3.select("#chart").html(""); // Clear existing content
+      //clearSVG();
+
+        
+//var color = ['pink','lightyellow','lightgreen','lightcyan','lightblue','violet'];
+var color = ['lightgreen','lightcyan','lightblue','violet'];
+	// set the dimensions and margins of the graph
+var margin = {top: 200, right: 30, bottom: 30, left: 200},
+    width = 800 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
+
+// append the svg object to the body of the page
+var svg = d3.select("#chart")
+  .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom);
+	    
+// get the data
+d3.csv("data/adult.csv", function(data) {
+
+  // List of groups (here I have one group per column)
+  var allGroup = d3.map(data, function(d){return(d.gender)}).keys()
+  var incomeGroup = d3.map(data, function(d){return(d.income)}).keys()
+   
+   removeOptions(document.getElementById("selectButton"));
+   // add the options to the button
+    var options = d3.select("#selectButton")
+      .selectAll('myOptions')
+     	.data(allGroup);
+	
+      options.enter()
+    	.append('option')
+      .text(function (d) { return d; }) // text showed in the menu
+      .attr("value", function (d) { return d; }) // corresponding value returned by the button
+
+	
+  //var survival_count =  my_data.filter(function(m){if(m[data_class]==d && m.survived == 1){return m}}).length;
+  var data0_len = data.filter(function(d){if(d['income']===incomeGroup[0] && d['gender']===allGroup[0]){return d}}).length;
+  var data1_len = data.filter(function(d){if(d['income']===incomeGroup[1] && d['gender']===allGroup[0]){return d}}).length;
+  var data_len = data.filter(function(d){if(d['gender']===allGroup[0]){return d}}).length;
+
+  var pie_viz = [data0_len/data_len, data1_len/data_len];
+	// Define margins and chart dimensions
+  var legend_text = ["<=50k",">50k"];
+  // Define the pie chart layout
+    var pie = d3.pie();
+
+    // Define the arc generator (adjusted for inner radius)
+    var arc = d3.arc()
+      .innerRadius(0)
+      .outerRadius(100);
+
+    // Create pie chart data based on input data
+    var pieData = pie(pie_viz);
+  
+  
+  //const g = svg.append("g")
+//.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+// Create a group element to hold pie chart slices
+var pieGroup = svg.append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+      .selectAll("path")
+      .data(pieData)
+      .enter()
+	.append("path")
+        .attr("d", arc)  // Use arc generator to define path
+        .attr("fill", function(d, i) { return color[i]; })  // Set color based on color array
+
+
+    // Insert text in svg
+	// svg.append('text').attr('x', 330).attr('y', 200).style('fill', 'steelblue').style('font-size', '24px').style('font-weight', 'bold').text('76%, <=50k');
+	
+	// svg.append('text').attr('x', 100).attr('y', 80).style('fill', 'steelblue').style('font-size', '24px').style('font-weight', 'bold').text('24%, >50k');
+
+	svg.append('text').attr('x', 320).attr('y', 200).style('fill', 'black').style('font-size', '24px').style('font-weight', 'bold').text('Green: <=50k');
+	svg.append('text').attr('x', 320).attr('y', 160).style('fill', 'black').style('font-size', '24px').style('font-weight', 'bold').text('Cyan: >50k');
+
+	svg.append('text').attr('x', 50).attr('y', 450).style('fill', 'black').style('font-size', '24px').style('font-weight', 'bold').text('Figure 4: Rich Poor Pie Chart by Gender dropdown');
+	
+	
+// A function that update the chart
+    function update(selectedGroup) {
+
+      // Create new data with the selection?
+      //var dataFilter = data.filter(function(d){return d.race==selectedGroup})
+
+      var data0_len_u = data.filter(function(d){if(d['income']===incomeGroup[0] && d['gender']==selectedGroup){return d}}).length;
+      //var data1_len_u = data.filter(function(d){if(d['income50k']==1 && d['race']==selectedGroup){return d}}).length;
+      var data_len_u =  data.filter(function(d){if(d['gender']==selectedGroup){return d}}).length;
+      //var data1_len_u = data_len_u - data0_len_u;
+      var pie_viz_u = [data0_len_u/data_len_u, 1-data0_len_u/data_len_u];
+
+      // Define the pie chart layout
+      var pie_u = d3.pie();
+
+      // Define the arc generator (adjusted for inner radius)
+      var arc_u = d3.arc()
+      .innerRadius(0)
+      .outerRadius(100);
+	    
+      // Create pie chart data based on input data
+      var pieData_u = pie_u(pie_viz_u);
+
+      // Create a group element to hold pie chart slices
+      //var pieGroup_u = svg.append("g")
+      //.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+     
+    
+      // Bind data to pie chart slices and create paths
+     pieGroup
+      .data(pieData_u)
+      .transition()
+      .duration(1000)
+        .attr("d", arc_u)  // Use arc generator to define path
+        .attr("fill", function(d, i) { return color[i]; });  // Set color based on color array
+    }
+  
+   // When the button is changed, run the updateChart function
+    d3.select("#selectButton").on("change", function(d) {
+        // recover the option that has been chosen
+        var selectedOption = d3.select(this).property("value");
+        // run the updateChart function with this selected option
+        update(selectedOption);
+    });
+
+    });
+
+    }
+
+     // Function to repopulate the SVG with circles
+    function populateSVG5() {
+      const selectButton = document.getElementById("selectButton");
+      selectButton.style.display = "block";
+      introviz.style.display = "none";
+      outroviz.style.display = "none";
+      d3.select("#chart").html(""); // Clear existing content
+      //clearSVG();
+
+        
+//var color = ['pink','lightyellow','lightgreen','lightcyan','lightblue','violet'];
+var color = ['lightgreen','lightcyan','lightblue','violet'];
+	// set the dimensions and margins of the graph
+var margin = {top: 200, right: 30, bottom: 30, left: 200},
+    width = 800 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
+
+// append the svg object to the body of the page
+var svg = d3.select("#chart")
+  .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom);
+	    
+// get the data
+d3.csv("data/adult.csv", function(data) {
+
+  // List of groups (here I have one group per column)
+  var allGroup = d3.map(data, function(d){return(d.relationship)}).keys()
+  var incomeGroup = d3.map(data, function(d){return(d.income)}).keys()
+   
+   removeOptions(document.getElementById("selectButton"));
+   // add the options to the button
+    var options = d3.select("#selectButton")
+      .selectAll('myOptions')
+     	.data(allGroup);
+	
+      options.enter()
+    	.append('option')
+      .text(function (d) { return d; }) // text showed in the menu
+      .attr("value", function (d) { return d; }) // corresponding value returned by the button
+
+	
+  //var survival_count =  my_data.filter(function(m){if(m[data_class]==d && m.survived == 1){return m}}).length;
+  var data0_len = data.filter(function(d){if(d['income']===incomeGroup[0] && d['relationship']===allGroup[0]){return d}}).length;
+  var data1_len = data.filter(function(d){if(d['income']===incomeGroup[1] && d['relationship']===allGroup[0]){return d}}).length;
+  var data_len = data.filter(function(d){if(d['relationship']===allGroup[0]){return d}}).length;
+
+  var pie_viz = [data0_len/data_len, data1_len/data_len];
+	// Define margins and chart dimensions
+  var legend_text = ["<=50k",">50k"];
+  // Define the pie chart layout
+    var pie = d3.pie();
+
+    // Define the arc generator (adjusted for inner radius)
+    var arc = d3.arc()
+      .innerRadius(0)
+      .outerRadius(100);
+
+    // Create pie chart data based on input data
+    var pieData = pie(pie_viz);
+  
+  
+  //const g = svg.append("g")
+//.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+// Create a group element to hold pie chart slices
+var pieGroup = svg.append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+      .selectAll("path")
+      .data(pieData)
+      .enter()
+	.append("path")
+        .attr("d", arc)  // Use arc generator to define path
+        .attr("fill", function(d, i) { return color[i]; })  // Set color based on color array
+
+
+    // Insert text in svg
+	// svg.append('text').attr('x', 330).attr('y', 200).style('fill', 'steelblue').style('font-size', '24px').style('font-weight', 'bold').text('76%, <=50k');
+	
+	// svg.append('text').attr('x', 100).attr('y', 80).style('fill', 'steelblue').style('font-size', '24px').style('font-weight', 'bold').text('24%, >50k');
+
+	svg.append('text').attr('x', 320).attr('y', 200).style('fill', 'black').style('font-size', '24px').style('font-weight', 'bold').text('Green: <=50k');
+	svg.append('text').attr('x', 320).attr('y', 160).style('fill', 'black').style('font-size', '24px').style('font-weight', 'bold').text('Cyan: >50k');
+
+	svg.append('text').attr('x', 50).attr('y', 450).style('fill', 'black').style('font-size', '24px').style('font-weight', 'bold').text('Figure 5: Rich Poor Pie Chart by Relationship dropdown');
+
+
+	
+// A function that update the chart
+    function update(selectedGroup) {
+
+      // Create new data with the selection?
+      //var dataFilter = data.filter(function(d){return d.race==selectedGroup})
+
+      var data0_len_u = data.filter(function(d){if(d['income']===incomeGroup[0] && d['relationship']==selectedGroup){return d}}).length;
+      //var data1_len_u = data.filter(function(d){if(d['income50k']==1 && d['race']==selectedGroup){return d}}).length;
+      var data_len_u =  data.filter(function(d){if(d['relationship']==selectedGroup){return d}}).length;
+      //var data1_len_u = data_len_u - data0_len_u;
+      var pie_viz_u = [data0_len_u/data_len_u, 1-data0_len_u/data_len_u];
+
+      // Define the pie chart layout
+      var pie_u = d3.pie();
+
+      // Define the arc generator (adjusted for inner radius)
+      var arc_u = d3.arc()
+      .innerRadius(0)
+      .outerRadius(100);
+	    
+      // Create pie chart data based on input data
+      var pieData_u = pie_u(pie_viz_u);
+
+      // Create a group element to hold pie chart slices
+      //var pieGroup_u = svg.append("g")
+      //.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+     
+    
+      // Bind data to pie chart slices and create paths
+     pieGroup
+      .data(pieData_u)
+      .transition()
+      .duration(1000)
+        .attr("d", arc_u)  // Use arc generator to define path
+        .attr("fill", function(d, i) { return color[i]; });  // Set color based on color array
+    }
+  
+   // When the button is changed, run the updateChart function
+    d3.select("#selectButton").on("change", function(d) {
+        // recover the option that has been chosen
+        var selectedOption = d3.select(this).property("value");
+        // run the updateChart function with this selected option
+        update(selectedOption);
+    });
+
+    });
+
+    }
+
+    // Get button elements
+    const clearButton = document.getElementById("clearButton");
+    const populateButton1 = document.getElementById("populateButton1");
+    const populateButton2 = document.getElementById("populateButton2");
+    const populateButton3 = document.getElementById("populateButton3");
+    const populateButton4 = document.getElementById("populateButton4");
+    const populateButton5 = document.getElementById("populateButton5");
+    const clearButton2 = document.getElementById("clearButton2");
+    //const populateButton4 = document.getElementById("populateButton4");
+    
+    // Add click event listener to the button
+    
+    clearButton.addEventListener("click", function() {
+      const selectButton = document.getElementById("selectButton");
+      selectButton.style.display = "none";
+      removeOptions(selectButton);
+      d3.select("#chart").html(""); // Clear existing content
+      // Toggle the visibility of the embed element
+      outroviz.style.display = "none";
+      introviz.style.display = "block";
+    });
+    populateButton1.addEventListener("click", populateSVG1);
+    populateButton2.addEventListener("click", populateSVG2);
+    populateButton3.addEventListener("click", populateSVG3);
+    populateButton4.addEventListener("click", populateSVG4);
+    populateButton5.addEventListener("click", populateSVG5);
+    clearButton2.addEventListener("click", function() {
+      const selectButton = document.getElementById("selectButton");
+      selectButton.style.display = "none";
+      removeOptions(selectButton);
+      d3.select("#chart").html(""); // Clear existing content
+      // Toggle the visibility of the embed element
+      introviz.style.display = "none";
+      outroviz.style.display = "block";
+    });
+    // Call populate function initially to create the chart
+    //populateSVG1();
+    const selectButton = document.getElementById("selectButton");
+    selectButton.style.display = "none";
+    outroviz.style.display = "none";
+    d3.select("#chart").html("");
+    //introviz.style.display = "block";
+  </script>
+</body>
+</html>
